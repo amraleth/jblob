@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types.holder;
 
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -17,22 +18,17 @@ import org.jetbrains.annotations.Nullable;
 @JBlobThreadSafe(notes = "If F and S are immutable types")
 @JBlobImmutable
 public record JBlobPair<F, S>(@Nullable F first, @Nullable S second) {
-    /**
-     * Constructs a new pair with both the first and second entry set to null.
-     */
-    public JBlobPair() {
-        this(null, null);
-    }
 
     /**
-     * Constructs a new pair with both the first and second entry set.
+     * Converts this pair into a triple.
      *
-     * @param first  The first entry.
-     * @param second The second entry.
+     * @param third The third value to insert into the triple.
+     * @param <U>   The new type of the value to add.
+     * @return A new triple with the third value set to the argument.
      */
-    public JBlobPair {
+    public <U> @NotNull JBlobTriple<F, S, U> toTriple(@Nullable U third) {
+        return new JBlobTriple<>(this.first, this.second, third);
     }
-
 
     @Override
     public String toString() {
