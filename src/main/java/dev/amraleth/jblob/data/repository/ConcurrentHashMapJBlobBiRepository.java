@@ -33,7 +33,7 @@ public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRe
     @Override
     public @NotNull JBlobResult<V> findBy(@NotNull K key) {
         if (!this.map.containsKey(key)) {
-            return JBlobResult.failure("Value for key %s not found".formatted(key));
+            return JBlobResult.failure("Value for key %s not found".formatted(key), null);
         }
         return JBlobResult.success(this.map.get(key));
     }

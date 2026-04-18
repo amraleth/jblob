@@ -54,7 +54,7 @@ public interface JBlobThrowingFunction<T, R> {
             try {
                 return JBlobResult.success(this.apply(value));
             } catch (Exception e) {
-                return JBlobResult.failure(e.getMessage());
+                return JBlobResult.failure(e.getMessage(), e);
             }
         };
     }
@@ -92,6 +92,10 @@ public interface JBlobThrowingFunction<T, R> {
      */
     static <T, R> @NotNull Function<T, R> wrap(@NotNull JBlobThrowingFunction<T, R> function) {
         return function.toFunction();
+    }
+
+    static <T, R> @NotNull JBlobThrowingFunction<T, R> of(@NotNull JBlobThrowingFunction<T, R> function) {
+        return function;
     }
 
     /**

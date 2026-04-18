@@ -96,7 +96,7 @@ public final class JBlobMultiMap<K, V> {
     public synchronized @NotNull JBlobResult<List<V>> get(@NotNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
-            return JBlobResult.failure("No values found for key: " + key);
+            return JBlobResult.failure("No values found for key %s".formatted(key), null);
         }
         return JBlobResult.success(Collections.unmodifiableList(values));
     }
@@ -110,9 +110,9 @@ public final class JBlobMultiMap<K, V> {
     public synchronized @NotNull JBlobResult<V> getFirst(@NotNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
-            return JBlobResult.failure("No values found for key: " + key);
+            return JBlobResult.failure("No values found for key %s".formatted(key), null);
         }
-        return JBlobResult.success(values.get(0));
+        return JBlobResult.success(values.getFirst());
     }
 
     /**
@@ -124,9 +124,9 @@ public final class JBlobMultiMap<K, V> {
     public synchronized @NotNull JBlobResult<V> getLast(@NotNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
-            return JBlobResult.failure("No values found for key: " + key);
+            return JBlobResult.failure("No values found for key %s".formatted(key), null);
         }
-        return JBlobResult.success(values.get(values.size() - 1));
+        return JBlobResult.success(values.getLast());
     }
 
     /**
@@ -247,7 +247,7 @@ public final class JBlobMultiMap<K, V> {
      */
     public synchronized @NotNull @Unmodifiable Map<K, List<V>> snapshot() {
         Map<K, List<V>> copy = new HashMap<>();
-        this.store.forEach((k, v) -> copy.put(k, Collections.unmodifiableList(new ArrayList<>(v))));
+        this.store.forEach((k, v) -> copy.put(k, List.copyOf(v)));
         return Collections.unmodifiableMap(copy);
     }
 }

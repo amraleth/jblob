@@ -79,7 +79,7 @@ public final class JBlobBiMap<K, V> {
         for (Map.Entry<K, V> entry : map.entrySet()) {
             JBlobResult<Void> result = biMap.put(entry.getKey(), entry.getValue());
             if (result.isFailure()) {
-                return JBlobResult.failure(result.getErrorMessage());
+                return JBlobResult.failure(result.getErrorMessage(), null);
             }
         }
         return JBlobResult.success(biMap);
@@ -97,7 +97,7 @@ public final class JBlobBiMap<K, V> {
      */
     public synchronized @NotNull JBlobResult<Void> put(@NotNull K key, @NotNull V value) {
         if (this.inverse.containsKey(value) && !this.inverse.get(value).equals(key)) {
-            return JBlobResult.failure("Value " + value + " is already associated with a different key.");
+            return JBlobResult.failure("Value " + value + " is already associated with a different key.", null);
         }
         K existingKey = this.inverse.get(value);
         if (existingKey != null) this.forward.remove(existingKey);
@@ -114,7 +114,7 @@ public final class JBlobBiMap<K, V> {
      */
     public synchronized @NotNull JBlobResult<V> getByKey(@NotNull K key) {
         V value = this.forward.get(key);
-        if (value == null) return JBlobResult.failure("No value found for key: " + key);
+        if (value == null) return JBlobResult.failure("No value found for key %s".formatted(key), null);
         return JBlobResult.success(value);
     }
 
@@ -126,7 +126,7 @@ public final class JBlobBiMap<K, V> {
      */
     public synchronized @NotNull JBlobResult<K> getByValue(@NotNull V value) {
         K key = this.inverse.get(value);
-        if (key == null) return JBlobResult.failure("No key found for value: " + value);
+        if (key == null) return JBlobResult.failure("No key found for value %s".formatted(value), null);
         return JBlobResult.success(key);
     }
 

@@ -5,6 +5,7 @@ import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -23,6 +24,7 @@ public final class JBlobResult<T> {
     private final @Nullable T value;
     private final boolean success;
     private final @Nullable String errorMessage;
+    private final @Nullable Exception exception;
 
     /**
      * Private constructor for creating a new result.
@@ -31,10 +33,11 @@ public final class JBlobResult<T> {
      * @param success      Weather the result is of type success or failure.
      * @param errorMessage A nullable error message.
      */
-    private JBlobResult(@Nullable T value, boolean success, @Nullable String errorMessage) {
+    private JBlobResult(@Nullable T value, boolean success, @Nullable String errorMessage, @Nullable Exception exception) {
         this.value = value;
         this.success = success;
         this.errorMessage = errorMessage;
+        this.exception = exception;
     }
 
     /**
@@ -45,7 +48,7 @@ public final class JBlobResult<T> {
      * @return A new result.
      */
     public static <T> @NotNull JBlobResult<T> success(@NotNull T value) {
-        return new JBlobResult<>(value, true, null);
+        return new JBlobResult<>(value, true, null, null);
     }
 
     /**
@@ -55,8 +58,8 @@ public final class JBlobResult<T> {
      * @param <T>          The type of data this result holds.
      * @return A new result.
      */
-    public static <T> @NotNull JBlobResult<T> failure(@NotNull String errorMessage) {
-        return new JBlobResult<>(null, false, errorMessage);
+    public static <T> @NotNull JBlobResult<T> failure(@NotNull String errorMessage, @Nullable Exception exception) {
+        return new JBlobResult<>(null, false, errorMessage, exception);
     }
 
     /**
@@ -129,7 +132,7 @@ public final class JBlobResult<T> {
         if (this.success) {
             return JBlobResult.success(mapper.apply(this.value));
         }
-        return JBlobResult.failure(this.errorMessage);
+        return JBlobResult.failure(this.errorMessage, null);
     }
 
     /**
@@ -143,7 +146,7 @@ public final class JBlobResult<T> {
         if (this.success) {
             return mapper.apply(this.value);
         }
-        return JBlobResult.failure(this.errorMessage);
+        return JBlobResult.failure(this.errorMessage, null);
     }
 
     /**
@@ -163,8 +166,8 @@ public final class JBlobResult<T> {
      * @param then The action to run.
      * @return The result.
      */
-    public @NotNull JBlobResult<T> ifFailure(@NotNull Consumer<T> then) {
-        if (!this.success) then.accept(this.value);
+    public @NotNull JBlobResult<T> ifFailure(@NotNull BiConsumer<String, Exception> then) {
+        if (!this.success) then.accept(this.errorMessage, this.exception);
         return this;
     }
 }

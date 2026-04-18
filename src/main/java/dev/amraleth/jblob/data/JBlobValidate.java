@@ -223,7 +223,7 @@ public final class JBlobValidate<T> {
         if (isValid()) {
             return JBlobResult.success(getValue());
         }
-        return JBlobResult.failure(String.join("; ", this.errors));
+        return JBlobResult.failure(String.join("; ", this.errors), null);
     }
 
     private @NotNull JBlobValidate<T> withError(@NotNull String message) {

@@ -52,7 +52,7 @@ public interface JBlobThrowingSupplier<T> {
             try {
                 return JBlobResult.success(this.get());
             } catch (Exception e) {
-                return JBlobResult.failure(e.getMessage());
+                return JBlobResult.failure(e.getMessage(), e);
             }
         };
     }

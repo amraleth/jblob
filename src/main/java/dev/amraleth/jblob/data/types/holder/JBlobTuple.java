@@ -50,7 +50,7 @@ public final class JBlobTuple {
      */
     public @NotNull JBlobResult<Object> get(int index) {
         if (this.data.length - 1 < index) {
-            return JBlobResult.failure("Index out of bounds");
+            return JBlobResult.failure("Index out of bounds", null);
         }
         return JBlobResult.success(this.data[index]);
     }
@@ -66,7 +66,7 @@ public final class JBlobTuple {
      */
     public <T> @NotNull JBlobResult<T> get(int index, @NotNull Class<T> clazz) {
         if (this.data.length - 1 < index) {
-            return JBlobResult.failure("Index out of bounds");
+            return JBlobResult.failure("Index out of bounds", null);
         }
         return JBlobResult.success(clazz.cast(this.data[index]));
     }

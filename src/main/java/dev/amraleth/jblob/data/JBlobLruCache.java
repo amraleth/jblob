@@ -175,7 +175,7 @@ public final class JBlobLruCache<K, V> {
 
         }
         misses++;
-        return JBlobResult.failure("No value found for key %s".formatted(key));
+        return JBlobResult.failure("No value found for key %s".formatted(key), null);
     }
 
     /**
