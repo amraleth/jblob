@@ -47,7 +47,7 @@ public final class JBlobResult<T> {
      * @param <T>   The type of data this result holds.
      * @return A new result.
      */
-    public static <T> @NotNull JBlobResult<T> success(@NotNull T value) {
+    public static <T> @NotNull JBlobResult<T> success(@Nullable T value) {
         return new JBlobResult<>(value, true, null, null);
     }
 
@@ -59,7 +59,7 @@ public final class JBlobResult<T> {
      * @param exception    An optional exception thrown on failure.
      * @return A new result.
      */
-    public static <T> @NotNull JBlobResult<T> failure(@NotNull String errorMessage, @Nullable Exception exception) {
+    public static <T> @NotNull JBlobResult<T> failure(@Nullable String errorMessage, @Nullable Exception exception) {
         return new JBlobResult<>(null, false, errorMessage, exception);
     }
 

@@ -31,7 +31,7 @@ public record JBlobTriple<F, S, T>(@Nullable F first, @Nullable S second, @Nulla
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "Triple [first=" + this.first + "second=" + this.second + "third=" + this.third + "]";
     }
 }

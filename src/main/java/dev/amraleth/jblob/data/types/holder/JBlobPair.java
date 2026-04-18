@@ -31,7 +31,7 @@ public record JBlobPair<F, S>(@Nullable F first, @Nullable S second) {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "Pair [first=" + this.first + " second=" + this.second + "]";
     }
 }

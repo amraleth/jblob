@@ -111,7 +111,7 @@ public final class JBlobLazyValue<T> {
      * @param fallback The fallback supplier supplying the fallback value.
      * @return The value or fallback.
      */
-    public @NotNull T orElseGet(@NotNull Supplier<T> fallback) {
+    public @Nullable T orElseGet(@NotNull Supplier<T> fallback) {
         synchronized (this) {
             return this.initialized ? this.value : fallback.get();
         }

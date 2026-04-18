@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types;
 
 import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.data.types.holder.JBlobPair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -77,7 +78,7 @@ public final class JBlobBiMap<K, V> {
     public static <K, V> @NotNull JBlobResult<JBlobBiMap<K, V>> fromMap(@NotNull Map<K, V> map) {
         JBlobBiMap<K, V> biMap = new JBlobBiMap<>();
         for (Map.Entry<K, V> entry : map.entrySet()) {
-            JBlobResult<Void> result = biMap.put(entry.getKey(), entry.getValue());
+            @NotNull JBlobResult<JBlobPair<K, V>> result = biMap.put(entry.getKey(), entry.getValue());
             if (result.isFailure()) {
                 return JBlobResult.failure(result.getErrorMessage(), null);
             }
@@ -95,7 +96,7 @@ public final class JBlobBiMap<K, V> {
      * @param value The value.
      * @return A success result, or a failure if the value is already present.
      */
-    public synchronized @NotNull JBlobResult<Void> put(@NotNull K key, @NotNull V value) {
+    public synchronized @NotNull JBlobResult<JBlobPair<K, V>> put(@NotNull K key, @NotNull V value) {
         if (this.inverse.containsKey(value) && !this.inverse.get(value).equals(key)) {
             return JBlobResult.failure("Value " + value + " is already associated with a different key.", null);
         }
@@ -218,6 +219,6 @@ public final class JBlobBiMap<K, V> {
      * @return An unmodifiable map snapshot.
      */
     public synchronized @NotNull @Unmodifiable Map<K, V> snapshot() {
-        return Collections.unmodifiableMap(new HashMap<>(this.forward));
+        return Map.copyOf(this.forward);
     }
 }
