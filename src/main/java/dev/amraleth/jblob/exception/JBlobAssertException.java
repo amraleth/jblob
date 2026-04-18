@@ -7,6 +7,11 @@ package dev.amraleth.jblob.exception;
  * @since 1.0
  */
 public final class JBlobAssertException extends RuntimeException {
+    /**
+     * Constructs a new assert exception.
+     *
+     * @param message The message of the exception.
+     */
     public JBlobAssertException(String message) {
         super(message);
     }

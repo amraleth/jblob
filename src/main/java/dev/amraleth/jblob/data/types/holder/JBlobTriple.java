@@ -7,9 +7,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a triple of data.
  *
- * @param <F> The type of the first entry.
- * @param <S> The type of the second entry.
- * @param <T> The type of the third entry.
+ * @param <F>    The type of the first entry.
+ * @param <S>    The type of the second entry.
+ * @param <T>    The type of the third entry.
+ * @param first  The first element of the triple.
+ * @param second The second element of the triple.
+ * @param third  The third element of the triple.
  * @author amraleth
  * @since 1.0
  */

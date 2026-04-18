@@ -7,8 +7,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a pair of data.
  *
- * @param <F> The type of the first entry.
- * @param <S> The type of the second entry.
+ * @param <F>    The type of the first entry.
+ * @param <S>    The type of the second entry.
+ * @param first  The first element of the pair.
+ * @param second The second element of the pair.
  * @author amraleth
  * @since 1.0
  */

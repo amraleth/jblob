@@ -121,7 +121,7 @@ public final class JBlobValidate<T> {
      * @param fieldName The name of the field.
      * @param extractor The extractor to run on the field.
      * @param rules     The rules to apply on the value.
-     * @param <T> The type of the validator.
+     * @param <F> The return type of the extractor.
      * @return The new validator.
      *
      * <pre>{@code

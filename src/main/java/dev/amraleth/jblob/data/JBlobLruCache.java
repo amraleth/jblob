@@ -95,6 +95,14 @@ public final class JBlobLruCache<K, V> {
         }
     }
 
+    /**
+     * Constructs a new cache with a maximum size.
+     *
+     * @param maxSize The maximum size of the cache.
+     * @param <K>     The type of the keys of the builder.
+     * @param <V>     The type of the values of the builder.
+     * @return A new builder.
+     */
     public static <K, V> @NotNull Builder<K, V> builder(int maxSize) {
         return new Builder<>(maxSize);
     }
