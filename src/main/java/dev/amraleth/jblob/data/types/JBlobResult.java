@@ -56,6 +56,7 @@ public final class JBlobResult<T> {
      *
      * @param errorMessage The error message.
      * @param <T>          The type of data this result holds.
+     * @param exception    An optional exception thrown on failure.
      * @return A new result.
      */
     public static <T> @NotNull JBlobResult<T> failure(@NotNull String errorMessage, @Nullable Exception exception) {

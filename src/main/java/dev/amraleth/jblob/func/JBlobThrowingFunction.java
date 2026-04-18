@@ -94,10 +94,6 @@ public interface JBlobThrowingFunction<T, R> {
         return function.toFunction();
     }
 
-    static <T, R> @NotNull JBlobThrowingFunction<T, R> of(@NotNull JBlobThrowingFunction<T, R> function) {
-        return function;
-    }
-
     /**
      * Wraps a throwing function to a result.
      *
