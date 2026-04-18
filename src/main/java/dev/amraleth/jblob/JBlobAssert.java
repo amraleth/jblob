@@ -12,10 +12,6 @@ import java.util.function.Predicate;
 /**
  * Contains chainable assertions for easier assertions
  *
- * <pre>{@code
- * assertEqual(assertNotNull(12), assertNotNull(12)); // asserts true
- * }</pre>
- *
  * @author amraleth
  * @since 1.0
  */
@@ -30,8 +26,7 @@ public final class JBlobAssert {
     }
 
     /**
-     * Base assertion with a predicate. The format values will be applied to the format string. If the predicate fails,
-     * an {@link JBlobAssertException} will be thrown.
+     * Base assertion with a predicate. The format values will be applied to the format string.
      *
      * @param value     The value to assert on.
      * @param predicate The predicate to run and test the value on.
@@ -116,7 +111,7 @@ public final class JBlobAssert {
      * @param <K>       The type of the second value.
      * @return The first value.
      */
-    public static <T, K> @Nullable T thAssertion(@Nullable T first, @Nullable K second,
+    public static <T, K> @Nullable T biAssertion(@Nullable T first, @Nullable K second,
                                                  @NotNull BiPredicate<T, K> predicate, @NotNull String format,
                                                  @NotNull Object... formats) {
         if (!predicate.test(first, second)) {
@@ -126,7 +121,7 @@ public final class JBlobAssert {
     }
 
     /**
-     * Asserts that two values are equal using '=='
+     * Asserts that two values are equal.
      *
      * @param first  The first value.
      * @param second The second value.
@@ -135,11 +130,11 @@ public final class JBlobAssert {
      * @return The first value.
      */
     public static <T, K> @Nullable T assertEquals(@Nullable T first, @Nullable K second) {
-        return thAssertion(first, second, Objects::equals, "Expected first and second to match", "");
+        return biAssertion(first, second, Objects::equals, "Expected first and second to match", "");
     }
 
     /**
-     * Asserts that two values are not equal using '!='
+     * Asserts that two values are not equal.
      *
      * @param first  The first value.
      * @param second The second value.
@@ -148,7 +143,7 @@ public final class JBlobAssert {
      * @return The first value.
      */
     public static <T, K> @Nullable T assertNotEquals(@Nullable T first, @Nullable K second) {
-        return thAssertion(first, second, (f, s) -> !Objects.equals(f, s), "Expected first and second to not match", "");
+        return biAssertion(first, second, (f, s) -> !Objects.equals(f, s), "Expected first and second to not match", "");
     }
 
 }
