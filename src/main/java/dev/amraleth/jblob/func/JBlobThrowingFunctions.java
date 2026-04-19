@@ -18,8 +18,14 @@ import java.util.function.Function;
  * @since 1.2
  */
 @JBlobStaticClass
-@JBlobImmutable
 public final class JBlobThrowingFunctions {
+
+    /**
+     * Private constructor.
+     */
+    private JBlobThrowingFunctions() {
+
+    }
 
     // parsing
     public static final Function<String, JBlobResult<Integer>> PARSE_INT = JBlobThrowingFunction.wrapToResult(Integer::parseInt);

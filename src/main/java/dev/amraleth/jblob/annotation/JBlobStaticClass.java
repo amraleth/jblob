@@ -1,5 +1,7 @@
 package dev.amraleth.jblob.annotation;
 
+import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+
 import java.lang.annotation.*;
 
 /**
@@ -13,5 +15,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.SOURCE)
 @Documented
 @Inherited
+@JBlobImmutable
 public @interface JBlobStaticClass {
 }

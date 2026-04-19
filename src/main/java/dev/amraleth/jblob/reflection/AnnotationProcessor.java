@@ -18,8 +18,14 @@ import java.util.function.Consumer;
  * @since 1.3
  */
 @JBlobStaticClass
-@JBlobImmutable
-public class AnnotationProcessor {
+public final class AnnotationProcessor {
+
+    /**
+     * Private constructor.
+     */
+    private AnnotationProcessor() {
+
+    }
 
     /**
      * Processes method annotations for a given class.
