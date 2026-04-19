@@ -34,8 +34,8 @@ import java.util.*;
 @JBlobMutable
 @JBlobThreadSafe(notes = "If K and V are immutable types.")
 public final class JBlobBiMap<K, V> {
-    private final @NotNull @NonNull Map<K, V> forward;
-    private final @NotNull @NonNull Map<V, K> inverse;
+    private final @NotNull Map<K, V> forward;
+    private final @NotNull Map<V, K> inverse;
 
     /**
      * Private constructor for creating a new bi map.
@@ -51,7 +51,7 @@ public final class JBlobBiMap<K, V> {
      * @param forward The forward map.
      * @param inverse The inverse map.
      */
-    private JBlobBiMap(@NotNull @NonNull Map<K, V> forward, @NotNull @NonNull Map<V, K> inverse) {
+    private JBlobBiMap(@NonNull Map<K, V> forward, @NonNull Map<V, K> inverse) {
         this.forward = forward;
         this.inverse = inverse;
     }
@@ -63,7 +63,7 @@ public final class JBlobBiMap<K, V> {
      * @param <V> The type of values.
      * @return A new empty bi map.
      */
-    public static <K, V> @NotNull @NonNull JBlobBiMap<K, V> create() {
+    public static <K, V> @NotNull JBlobBiMap<K, V> create() {
         return new JBlobBiMap<>();
     }
 
@@ -76,10 +76,10 @@ public final class JBlobBiMap<K, V> {
      * @param <V> The type of values.
      * @return A result containing the new bi map, or a failure if duplicate values exist.
      */
-    public static <K, V> @NotNull @NonNull JBlobResult<JBlobBiMap<K, V>> fromMap(@NotNull @NonNull Map<K, V> map) {
+    public static <K, V> @NotNull JBlobResult<JBlobBiMap<K, V>> fromMap(@NonNull Map<K, V> map) {
         JBlobBiMap<K, V> biMap = new JBlobBiMap<>();
         for (Map.Entry<K, V> entry : map.entrySet()) {
-            @NotNull @NonNull JBlobResult<JBlobPair<K, V>> result = biMap.put(entry.getKey(), entry.getValue());
+            @NotNull JBlobResult<JBlobPair<K, V>> result = biMap.put(entry.getKey(), entry.getValue());
             if (result.isFailure()) {
                 return JBlobResult.failure(result.getErrorMessage(), null);
             }
@@ -97,7 +97,7 @@ public final class JBlobBiMap<K, V> {
      * @param value The value.
      * @return A success result, or a failure if the value is already present.
      */
-    public synchronized @NotNull @NonNull JBlobResult<JBlobPair<K, V>> put(@NotNull @NonNull K key, @NotNull @NonNull V value) {
+    public synchronized @NotNull JBlobResult<JBlobPair<K, V>> put(@NonNull K key, @NonNull V value) {
         if (this.inverse.containsKey(value) && !this.inverse.get(value).equals(key)) {
             return JBlobResult.failure("Value " + value + " is already associated with a different key.", null);
         }
@@ -114,7 +114,7 @@ public final class JBlobBiMap<K, V> {
      * @param key The key.
      * @return A result containing the value, or a failure if the key is not present.
      */
-    public synchronized @NotNull @NonNull JBlobResult<V> getByKey(@NotNull @NonNull K key) {
+    public synchronized @NotNull JBlobResult<V> getByKey(@NonNull K key) {
         V value = this.forward.get(key);
         if (value == null) return JBlobResult.failure("No value found for key %s".formatted(key), null);
         return JBlobResult.success(value);
@@ -126,7 +126,7 @@ public final class JBlobBiMap<K, V> {
      * @param value The value.
      * @return A result containing the key, or a failure if the value is not present.
      */
-    public synchronized @NotNull @NonNull JBlobResult<K> getByValue(@NotNull @NonNull V value) {
+    public synchronized @NotNull JBlobResult<K> getByValue(@NonNull V value) {
         K key = this.inverse.get(value);
         if (key == null) return JBlobResult.failure("No key found for value %s".formatted(value), null);
         return JBlobResult.success(key);
@@ -138,7 +138,7 @@ public final class JBlobBiMap<K, V> {
      * @param key The key to remove.
      * @return True if the key was present and removed, false otherwise.
      */
-    public synchronized boolean removeByKey(@NotNull @NonNull K key) {
+    public synchronized boolean removeByKey(@NonNull K key) {
         V value = this.forward.remove(key);
         if (value == null) return false;
         this.inverse.remove(value);
@@ -151,7 +151,7 @@ public final class JBlobBiMap<K, V> {
      * @param value The value to remove.
      * @return True if the value was present and removed, false otherwise.
      */
-    public synchronized boolean removeByValue(@NotNull @NonNull V value) {
+    public synchronized boolean removeByValue(@NonNull V value) {
         K key = this.inverse.remove(value);
         if (key == null) return false;
         this.forward.remove(key);
@@ -164,7 +164,7 @@ public final class JBlobBiMap<K, V> {
      * @param key The key to check.
      * @return True if the key is present, false otherwise.
      */
-    public synchronized boolean containsKey(@NotNull @NonNull K key) {
+    public synchronized boolean containsKey(@NonNull K key) {
         return this.forward.containsKey(key);
     }
 
@@ -174,7 +174,7 @@ public final class JBlobBiMap<K, V> {
      * @param value The value to check.
      * @return True if the value is present, false otherwise.
      */
-    public synchronized boolean containsValue(@NotNull @NonNull V value) {
+    public synchronized boolean containsValue(@NonNull V value) {
         return this.inverse.containsKey(value);
     }
 
@@ -210,7 +210,7 @@ public final class JBlobBiMap<K, V> {
      *
      * @return The inverse bi map.
      */
-    public synchronized @NotNull @NonNull JBlobBiMap<V, K> inverse() {
+    public synchronized @NotNull JBlobBiMap<V, K> inverse() {
         return new JBlobBiMap<>(new HashMap<>(this.inverse), new HashMap<>(this.forward));
     }
 
@@ -219,7 +219,7 @@ public final class JBlobBiMap<K, V> {
      *
      * @return An unmodifiable map snapshot.
      */
-    public synchronized @NotNull @NonNull @Unmodifiable Map<K, V> snapshot() {
+    public synchronized @NotNull @Unmodifiable Map<K, V> snapshot() {
         return Map.copyOf(this.forward);
     }
 }

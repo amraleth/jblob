@@ -37,8 +37,8 @@ public final class JBlobAssert {
      * @return The input value's type.
      * @throws IllegalArgumentException If the predicate fails.
      */
-    public static <T> @Nullable T assertion(@Nullable T value, @NotNull @NonNull Predicate<T> predicate,
-                                            @NotNull @NonNull String format, @NotNull @NonNull Object... formats) {
+    public static <T> @Nullable T assertion(@Nullable T value, @NonNull Predicate<T> predicate,
+                                            @NonNull String format, @NonNull Object... formats) {
         if (!predicate.test(value)) {
             throw new JBlobAssertException(String.format(format, formats));
         }
@@ -113,8 +113,8 @@ public final class JBlobAssert {
      * @return The first value.
      */
     public static <T, K> @Nullable T biAssertion(@Nullable T first, @Nullable K second,
-                                                 @NotNull @NonNull BiPredicate<T, K> predicate,
-                                                 @NotNull @NonNull String format, @NotNull @NonNull Object... formats) {
+                                                 @NonNull BiPredicate<T, K> predicate,
+                                                 @NonNull String format, @NonNull Object... formats) {
         if (!predicate.test(first, second)) {
             throw new JBlobAssertException(String.format(format, formats));
         }

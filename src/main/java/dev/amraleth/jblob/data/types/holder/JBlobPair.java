@@ -27,12 +27,12 @@ public record JBlobPair<F, S>(@Nullable F first, @Nullable S second) {
      * @param <U>   The new type of the value to add.
      * @return A new triple with the third value set to the argument.
      */
-    public <U> @NotNull @NonNull JBlobTriple<F, S, U> toTriple(@Nullable U third) {
+    public <U> @NotNull JBlobTriple<F, S, U> toTriple(@Nullable U third) {
         return new JBlobTriple<>(this.first, this.second, third);
     }
 
     @Override
-    public @NotNull @NonNull String toString() {
+    public @NotNull String toString() {
         return "Pair [first=" + this.first + " second=" + this.second + "]";
     }
 }

@@ -22,7 +22,7 @@ public @interface JBlobDeprecated {
      *
      * @return The reason.
      */
-    @NotNull @NonNull String reason();
+    @NotNull String reason();
 
     /**
      * An optional argument for what this is being replaced with.

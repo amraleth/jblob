@@ -31,15 +31,14 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      */
     public static final JBlobTimestamp EPOCH = new JBlobTimestamp(Instant.EPOCH);
 
-    private final @NotNull
-    @NonNull Instant instant;
+    private final @NotNull Instant instant;
 
     /**
      * Private constructor.
      *
      * @param instant The backing UTC instant.
      */
-    private JBlobTimestamp(@NotNull @NonNull Instant instant) {
+    private JBlobTimestamp(@NonNull Instant instant) {
         this.instant = instant;
     }
 
@@ -48,7 +47,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      *
      * @return The current timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp now() {
+    public static @NotNull JBlobTimestamp now() {
         return new JBlobTimestamp(Instant.now());
     }
 
@@ -58,7 +57,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param instant The instant.
      * @return A new timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp of(@NotNull @NonNull Instant instant) {
+    public static @NotNull JBlobTimestamp of(@NonNull Instant instant) {
         return new JBlobTimestamp(instant);
     }
 
@@ -68,7 +67,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param epochMilli Milliseconds since {@code 1970-01-01T00:00:00Z}.
      * @return A new timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp ofEpochMilli(long epochMilli) {
+    public static @NotNull JBlobTimestamp ofEpochMilli(long epochMilli) {
         return new JBlobTimestamp(Instant.ofEpochMilli(epochMilli));
     }
 
@@ -78,7 +77,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param epochSecond Seconds since {@code 1970-01-01T00:00:00Z}.
      * @return A new timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp ofEpochSecond(long epochSecond) {
+    public static @NotNull JBlobTimestamp ofEpochSecond(long epochSecond) {
         return new JBlobTimestamp(Instant.ofEpochSecond(epochSecond));
     }
 
@@ -89,7 +88,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param zone     The zone to resolve ambiguity.
      * @return A new timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp of(@NotNull LocalDateTime dateTime, @NotNull @NonNull ZoneId zone) {
+    public static @NotNull JBlobTimestamp of(@NonNull LocalDateTime dateTime, @NonNull ZoneId zone) {
         return new JBlobTimestamp(dateTime.atZone(zone).toInstant());
     }
 
@@ -99,7 +98,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param sqlTimestamp The SQL timestamp.
      * @return A new timestamp.
      */
-    public static @NotNull @NonNull JBlobTimestamp of(@NotNull @NonNull Timestamp sqlTimestamp) {
+    public static @NotNull JBlobTimestamp of(@NonNull Timestamp sqlTimestamp) {
         return new JBlobTimestamp(sqlTimestamp.toInstant());
     }
 
@@ -109,7 +108,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param text The ISO-8601 string.
      * @return A result containing the parsed timestamp, or a failure if the format is invalid.
      */
-    public static @NotNull @NonNull JBlobResult<JBlobTimestamp> parse(@NotNull @NonNull String text) {
+    public static @NotNull JBlobResult<JBlobTimestamp> parse(@NonNull String text) {
         try {
             return JBlobResult.success(new JBlobTimestamp(Instant.parse(text)));
         } catch (DateTimeParseException e) {
@@ -123,7 +122,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param duration The duration to add.
      * @return A new timestamp.
      */
-    public @NotNull @NonNull JBlobTimestamp plus(@NotNull @NonNull Duration duration) {
+    public @NotNull JBlobTimestamp plus(@NonNull Duration duration) {
         return new JBlobTimestamp(this.instant.plus(duration));
     }
 
@@ -134,7 +133,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param duration The duration to subtract.
      * @return A new timestamp.
      */
-    public @NotNull @NonNull JBlobTimestamp minus(@NotNull @NonNull Duration duration) {
+    public @NotNull JBlobTimestamp minus(@NonNull Duration duration) {
         return new JBlobTimestamp(this.instant.minus(duration));
     }
 
@@ -145,7 +144,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param other The other timestamp.
      * @return The duration between the two timestamps.
      */
-    public @NotNull @NonNull Duration durationUntil(@NotNull @NonNull JBlobTimestamp other) {
+    public @NotNull Duration durationUntil(@NonNull JBlobTimestamp other) {
         return Duration.between(this.instant, other.instant);
     }
 
@@ -156,7 +155,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param other The other timestamp.
      * @return {@code true} if this is before {@code other}.
      */
-    public boolean isBefore(@NotNull @NonNull JBlobTimestamp other) {
+    public boolean isBefore(@NonNull JBlobTimestamp other) {
         return this.instant.isBefore(other.instant);
     }
 
@@ -166,7 +165,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param other The other timestamp.
      * @return {@code true} if this is after {@code other}.
      */
-    public boolean isAfter(@NotNull @NonNull JBlobTimestamp other) {
+    public boolean isAfter(@NonNull JBlobTimestamp other) {
         return this.instant.isAfter(other.instant);
     }
 
@@ -177,12 +176,12 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param to   The end of the range (exclusive).
      * @return {@code true} if this timestamp falls within the range.
      */
-    public boolean isBetween(@NotNull @NonNull JBlobTimestamp from, @NotNull @NonNull JBlobTimestamp to) {
+    public boolean isBetween(@NonNull JBlobTimestamp from, @NotNull JBlobTimestamp to) {
         return !this.isBefore(from) && this.isBefore(to);
     }
 
     @Override
-    public int compareTo(@NotNull @NonNull JBlobTimestamp other) {
+    public int compareTo(@NonNull JBlobTimestamp other) {
         return this.instant.compareTo(other.instant);
     }
 
@@ -191,7 +190,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      *
      * @return The instant.
      */
-    public @NotNull @NonNull Instant toInstant() {
+    public @NotNull Instant toInstant() {
         return this.instant;
     }
 
@@ -220,7 +219,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param zone The target timezone.
      * @return A local date-time in the given zone.
      */
-    public @NotNull @NonNull LocalDateTime toLocalDateTime(@NotNull @NonNull ZoneId zone) {
+    public @NotNull LocalDateTime toLocalDateTime(@NonNull ZoneId zone) {
         return LocalDateTime.ofInstant(this.instant, zone);
     }
 
@@ -229,7 +228,7 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      *
      * @return A SQL timestamp.
      */
-    public @NotNull @NonNull Timestamp toSqlTimestamp() {
+    public @NotNull Timestamp toSqlTimestamp() {
         return Timestamp.from(this.instant);
     }
 
@@ -239,12 +238,12 @@ public final class JBlobTimestamp implements Comparable<JBlobTimestamp> {
      * @param formatter The formatter to use.
      * @return The formatted string.
      */
-    public @NotNull @NonNull String format(@NotNull @NonNull DateTimeFormatter formatter) {
+    public @NotNull String format(@NonNull DateTimeFormatter formatter) {
         return formatter.format(this.instant);
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return this.instant.toString();
     }
 

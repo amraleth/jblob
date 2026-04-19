@@ -26,14 +26,14 @@ public interface JBlobThrowingSupplier<T> {
      * @return The data this supplier holds.
      * @throws Exception If an error during the supplication happened.
      */
-    T get() throws Exception;
+    @Nullable T get() throws Exception;
 
     /**
      * Converts this to a normal supplier.
      *
      * @return The supplier.
      */
-    default @NotNull @NonNull Supplier<T> toSupplier() {
+    default @NotNull Supplier<T> toSupplier() {
         return () -> {
             try {
                 return this.get();
@@ -48,7 +48,7 @@ public interface JBlobThrowingSupplier<T> {
      *
      * @return The result.
      */
-    default @NotNull @NonNull Supplier<JBlobResult<T>> toResult() {
+    default @NotNull Supplier<JBlobResult<T>> toResult() {
         return () -> {
             try {
                 return JBlobResult.success(this.get());
@@ -63,7 +63,7 @@ public interface JBlobThrowingSupplier<T> {
      *
      * @return The lazy value.
      */
-    default @NotNull @NonNull JBlobLazyValue<T> toLazy() {
+    default @NotNull JBlobLazyValue<T> toLazy() {
         return JBlobLazyValue.of(this.toSupplier());
     }
 
@@ -75,7 +75,7 @@ public interface JBlobThrowingSupplier<T> {
      * @param <T>      The type of value.
      * @return The value or the fallback.
      */
-    static <T> @Nullable T getOrElse(@NotNull @NonNull JBlobThrowingSupplier<T> supplier, T fallback) {
+    static <T> @Nullable T getOrElse(@NonNull JBlobThrowingSupplier<T> supplier, T fallback) {
         try {
             return supplier.get();
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public interface JBlobThrowingSupplier<T> {
      * @param <T>      The type of value.
      * @return The value.
      */
-    static <T> @Nullable T getOrThrow(@NotNull @NonNull JBlobThrowingSupplier<T> supplier) {
+    static <T> @Nullable T getOrThrow(@NotNull JBlobThrowingSupplier<T> supplier) {
         try {
             return supplier.get();
         } catch (Exception e) {

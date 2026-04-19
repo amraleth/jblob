@@ -27,12 +27,12 @@ public record JBlobTriple<F, S, T>(@Nullable F first, @Nullable S second, @Nulla
      *
      * @return A new pair with the third value dropped.
      */
-    public @NotNull @NonNull JBlobPair<F, S> toPair() {
+    public @NotNull JBlobPair<F, S> toPair() {
         return new JBlobPair<>(this.first, this.second);
     }
 
     @Override
-    public @NotNull @NonNull String toString() {
+    public @NotNull String toString() {
         return "Triple [first=" + this.first + "second=" + this.second + "third=" + this.third + "]";
     }
 }

@@ -26,8 +26,7 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * @return The value if no match was found.
      */
     @NotNull
-    @NonNull
-    JBlobResult<V> findBy(@NotNull K key);
+    JBlobResult<V> findBy(@NonNull K key);
 
     /**
      * Gets a list of all keys.
@@ -37,7 +36,6 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * information about weather this is a cloned list or a reference.
      */
     @NotNull
-    @NonNull
     @Unmodifiable
     List<K> getKeys();
 
@@ -49,7 +47,6 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * information about weather this is a cloned list or a reference.
      */
     @NotNull
-    @NonNull
     @Unmodifiable
     List<V> getValues();
 
@@ -59,14 +56,14 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * @param key   The key to insert.
      * @param value The value to insert.
      */
-    void insert(@NotNull @NonNull K key, @NotNull @NonNull V value);
+    void insert(@NonNull K key, @NonNull V value);
 
     /**
      * Removes an entry from the repository.
      *
      * @param key The key to remove the associated pair of.
      */
-    void delete(@NotNull @NonNull K key);
+    void delete(@NonNull K key);
 
     /**
      * Gets the total count of entries in the repository.

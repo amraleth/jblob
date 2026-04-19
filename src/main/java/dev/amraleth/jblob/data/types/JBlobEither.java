@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types;
 
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,8 +28,11 @@ import java.util.function.Function;
 @JBlobThreadSafe(notes = "If L and R are immutable types")
 @JBlobImmutable
 public final class JBlobEither<L, R> {
+    @Getter
     private final @Nullable L left;
+    @Getter
     private final @Nullable R right;
+    @Getter
     private final boolean isLeft;
 
     /**
@@ -52,7 +56,7 @@ public final class JBlobEither<L, R> {
      * @param <R>   The type of the right value.
      * @return The either instance.
      */
-    public static <L, R> @NotNull @NonNull JBlobEither<L, R> left(@Nullable L value) {
+    public static <L, R> @NotNull JBlobEither<L, R> left(@Nullable L value) {
         return new JBlobEither<>(value, null, true);
     }
 
@@ -64,7 +68,7 @@ public final class JBlobEither<L, R> {
      * @param <R>   The type of the right value.
      * @return The either instance.
      */
-    public static <L, R> @NotNull @NonNull JBlobEither<L, R> right(@Nullable R value) {
+    public static <L, R> @NotNull JBlobEither<L, R> right(@Nullable R value) {
         return new JBlobEither<>(null, value, false);
     }
 
@@ -75,46 +79,10 @@ public final class JBlobEither<L, R> {
      * @param <T>    The type of value the result holds.
      * @return An either instance constructed from a result.
      */
-    public static <T> JBlobEither<String, T> fromResult(@NotNull @NonNull JBlobResult<T> result) {
+    public static <T> @NotNull JBlobEither<String, T> fromResult(@NonNull JBlobResult<T> result) {
         return result.isSuccess()
                 ? JBlobEither.right(result.getValue())
                 : JBlobEither.left(result.getErrorMessage());
-    }
-
-    /**
-     * Specifies if the value is on the left side.
-     *
-     * @return True if the value is on the left side, false otherwise.
-     */
-    public boolean isLeft() {
-        return this.isLeft;
-    }
-
-    /**
-     * Specifies if the value is on the right side.
-     *
-     * @return True if the value is on the right side, false otherwise.
-     */
-    public boolean isRight() {
-        return !this.isLeft;
-    }
-
-    /**
-     * Gets the left value if present.
-     *
-     * @return The left value.
-     */
-    public @Nullable L getLeft() {
-        return this.left;
-    }
-
-    /**
-     * Gets the right value if present.
-     *
-     * @return The right value.
-     */
-    public @Nullable R getRight() {
-        return this.right;
     }
 
     /**
@@ -123,7 +91,7 @@ public final class JBlobEither<L, R> {
      * @param fallback The fallback.
      * @return The value or the fallback.
      */
-    public @Nullable L leftOrElse(@NotNull @NonNull L fallback) {
+    public @Nullable L leftOrElse(@NonNull L fallback) {
         return this.isLeft ? this.left : fallback;
     }
 
@@ -133,7 +101,7 @@ public final class JBlobEither<L, R> {
      * @param fallback The fallback.
      * @return The value or the fallback.
      */
-    public @Nullable R rightOrElse(@NotNull @NonNull R fallback) {
+    public @Nullable R rightOrElse(@NonNull R fallback) {
         return !this.isLeft ? this.right : fallback;
     }
 
@@ -166,7 +134,7 @@ public final class JBlobEither<L, R> {
      * @param <U>    Generic U.
      * @return A new either instance.
      */
-    public <U> @NotNull @NonNull JBlobEither<U, R> mapLeft(@NotNull @NonNull Function<L, U> mapper) {
+    public <U> @NotNull JBlobEither<U, R> mapLeft(@NonNull Function<L, U> mapper) {
         if (this.isLeft) return JBlobEither.left(mapper.apply(this.left));
         return JBlobEither.right(this.right);
     }
@@ -178,7 +146,7 @@ public final class JBlobEither<L, R> {
      * @param <U>    Generic U.
      * @return A new either instance.
      */
-    public <U> @NotNull @NonNull JBlobEither<L, U> mapRight(@NotNull @NonNull Function<R, U> mapper) {
+    public <U> @NotNull JBlobEither<L, U> mapRight(@NonNull Function<R, U> mapper) {
         if (!this.isLeft) return JBlobEither.right(mapper.apply(this.right));
         return JBlobEither.left(this.left);
     }
@@ -190,7 +158,7 @@ public final class JBlobEither<L, R> {
      * @param <U>    The first type of the either.
      * @return The applied mapper if the value is left, otherwise a new either of the right value.
      */
-    public <U> @NotNull @NonNull JBlobEither<U, R> flatMapLeft(@NotNull @NonNull Function<L, JBlobEither<U, R>> mapper) {
+    public <U> @NotNull JBlobEither<U, R> flatMapLeft(@NonNull Function<L, JBlobEither<U, R>> mapper) {
         if (this.isLeft) return mapper.apply(this.left);
         return JBlobEither.right(this.right);
     }
@@ -202,7 +170,7 @@ public final class JBlobEither<L, R> {
      * @param <U>    The first type of the either.
      * @return The applied mapper if the value is right, otherwise a new either of the left value.
      */
-    public <U> @NotNull @NonNull JBlobEither<L, U> flatMapRight(@NotNull @NonNull Function<R, JBlobEither<L, U>> mapper) {
+    public <U> @NotNull JBlobEither<L, U> flatMapRight(@NonNull Function<R, JBlobEither<L, U>> mapper) {
         if (!this.isLeft) return mapper.apply(this.right);
         return JBlobEither.left(this.left);
     }
@@ -215,7 +183,7 @@ public final class JBlobEither<L, R> {
      * @param <U>     Generic U.
      * @return U
      */
-    public <U> @NotNull @NonNull U fold(@NotNull @NonNull Function<L, U> onLeft, @NotNull @NonNull Function<R, U> onRight) {
+    public <U> @NotNull U fold(@NonNull Function<L, U> onLeft, @NonNull Function<R, U> onRight) {
         return this.isLeft ? onLeft.apply(this.left) : onRight.apply(this.right);
     }
 
@@ -225,7 +193,7 @@ public final class JBlobEither<L, R> {
      * @param then The consumer to perform.
      * @return this.
      */
-    public @NotNull @NonNull JBlobEither<L, R> ifLeft(@NotNull @NonNull Consumer<L> then) {
+    public @NotNull JBlobEither<L, R> ifLeft(@NonNull Consumer<L> then) {
         if (this.isLeft) then.accept(this.left);
         return this;
     }
@@ -236,7 +204,7 @@ public final class JBlobEither<L, R> {
      * @param then The consumer to perform.
      * @return this.
      */
-    public @NotNull @NonNull JBlobEither<L, R> ifRight(@NotNull @NonNull Consumer<R> then) {
+    public @NotNull JBlobEither<L, R> ifRight(@NonNull Consumer<R> then) {
         if (!this.isLeft) then.accept(this.right);
         return this;
     }

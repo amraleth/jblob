@@ -25,7 +25,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @return The return value of the function.
      * @throws Exception If an error during application happened.
      */
-    R apply(T value) throws Exception;
+    @NotNull R apply(@NonNull T value) throws Exception;
 
     /**
      * Converts the throwing function to a java function.
@@ -33,7 +33,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @return The function.
      * @see Function
      */
-    default @NotNull @NonNull Function<T, R> toFunction() {
+    default @NotNull Function<T, R> toFunction() {
         return value -> {
             try {
                 return this.apply(value);
@@ -50,7 +50,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @see JBlobResult
      * @see Function
      */
-    default @NotNull @NonNull Function<T, JBlobResult<R>> toResult() {
+    default @NotNull Function<T, JBlobResult<R>> toResult() {
         return value -> {
             try {
                 return JBlobResult.success(this.apply(value));
@@ -67,7 +67,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @param <V>   The new return value.
      * @return The function.
      */
-    default <V> @NotNull @NonNull JBlobThrowingFunction<T, V> andThen(@NotNull @NonNull JBlobThrowingFunction<R, V> after) {
+    default <V> @NotNull JBlobThrowingFunction<T, V> andThen(@NonNull JBlobThrowingFunction<R, V> after) {
         return value -> after.apply(this.apply(value));
     }
 
@@ -78,7 +78,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @param <V>    The after return type.
      * @return The function.
      */
-    default <V> @NotNull @NonNull JBlobThrowingFunction<V, R> compose(@NotNull @NonNull JBlobThrowingFunction<V, T> before) {
+    default <V> @NotNull JBlobThrowingFunction<V, R> compose(@NonNull JBlobThrowingFunction<V, T> before) {
         return value -> this.apply(before.apply(value));
     }
 
@@ -91,7 +91,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @return The java function.
      * @see Function
      */
-    static <T, R> @NotNull @NonNull Function<T, R> wrap(@NotNull @NonNull JBlobThrowingFunction<T, R> function) {
+    static <T, R> @NotNull Function<T, R> wrap(@NonNull JBlobThrowingFunction<T, R> function) {
         return function.toFunction();
     }
 
@@ -104,7 +104,7 @@ public interface JBlobThrowingFunction<T, R> {
      * @return The result.
      * @see JBlobResult
      */
-    static <T, R> @NotNull @NonNull Function<T, JBlobResult<R>> wrapToResult(@NotNull @NonNull JBlobThrowingFunction<T, R> function) {
+    static <T, R> @NotNull Function<T, JBlobResult<R>> wrapToResult(@NonNull JBlobThrowingFunction<T, R> function) {
         return function.toResult();
     }
 }

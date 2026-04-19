@@ -45,7 +45,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param startInclusive Weather the start of the range is inclusive.
      * @param endInclusive   Weather the end of the range is inclusive.
      */
-    private JBlobRange(@NotNull @NonNull T start, @NotNull @NonNull T end, boolean startInclusive, boolean endInclusive) {
+    private JBlobRange(@NonNull T start, @NonNull T end, boolean startInclusive, boolean endInclusive) {
         if (start.compareTo(end) > 0) {
             throw new IllegalArgumentException(String.format("Start %s must not be greater than end %s", start, end));
         }
@@ -63,7 +63,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param <T>   The type of the range.
      * @return A new range.
      */
-    public static <T extends Comparable<T>> @NotNull @NonNull JBlobRange<T> closed(@NotNull @NonNull T start, @NotNull @NonNull T end) {
+    public static <T extends Comparable<T>> @NotNull JBlobRange<T> closed(@NonNull T start, @NonNull T end) {
         return new JBlobRange<>(start, end, true, true);
     }
 
@@ -75,7 +75,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param <T>   The type of the range.
      * @return A new range.
      */
-    public static <T extends Comparable<T>> @NotNull @NonNull JBlobRange<T> open(@NotNull @NonNull T start, @NotNull @NonNull T end) {
+    public static <T extends Comparable<T>> @NotNull JBlobRange<T> open(@NonNull T start, @NonNull T end) {
         return new JBlobRange<>(start, end, false, false);
     }
 
@@ -87,7 +87,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param <T>   The type of the range.
      * @return A new range.
      */
-    public static <T extends Comparable<T>> @NotNull @NonNull JBlobRange<T> closedOpen(@NotNull @NonNull T start, @NotNull @NonNull T end) {
+    public static <T extends Comparable<T>> @NotNull JBlobRange<T> closedOpen(@NonNull T start, @NonNull T end) {
         return new JBlobRange<>(start, end, true, false);
     }
 
@@ -99,7 +99,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param <T>   The type of the range.
      * @return A new range.
      */
-    public static <T extends Comparable<T>> @NotNull @NonNull JBlobRange<T> openClosed(@NotNull @NonNull T start, @NotNull @NonNull T end) {
+    public static <T extends Comparable<T>> @NotNull JBlobRange<T> openClosed(@NonNull T start, @NonNull T end) {
         return new JBlobRange<>(start, end, false, true);
     }
 
@@ -109,7 +109,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param value The value to check.
      * @return True if the value is in range, false otherwise.
      */
-    public boolean contains(@NotNull @NonNull T value) {
+    public boolean contains(@NonNull T value) {
         int startCmp = value.compareTo(this.start);
         int endCmp = value.compareTo(this.end);
 
@@ -125,7 +125,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param other The other range.
      * @return True if the ranges overlap, false otherwise.
      */
-    public boolean overlaps(@NotNull @NonNull JBlobRange<T> other) {
+    public boolean overlaps(@NonNull JBlobRange<T> other) {
         return this.contains(other.start) || this.contains(other.end)
                 || other.contains(this.start) || other.contains(this.end);
     }
@@ -136,7 +136,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param other The other range.
      * @return True if the ranges are adjacent, false otherwise.
      */
-    public boolean isAdjacentTo(@NotNull @NonNull JBlobRange<T> other) {
+    public boolean isAdjacentTo(@NonNull JBlobRange<T> other) {
         return this.end.compareTo(other.start) == 0 || other.end.compareTo(this.start) == 0;
     }
 
@@ -155,7 +155,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param other The other range.
      * @return An optional range that is the intersection of this range and the other range.
      */
-    public @NotNull @NonNull Optional<JBlobRange<T>> intersection(@NotNull @NonNull JBlobRange<T> other) {
+    public @NotNull Optional<JBlobRange<T>> intersection(@NonNull JBlobRange<T> other) {
         if (!this.overlaps(other)) return Optional.empty();
 
         T newStart = this.start.compareTo(other.start) >= 0 ? this.start : other.start;
@@ -176,7 +176,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      * @param other The other range.
      * @return The range.
      */
-    public @NotNull @NonNull JBlobRange<T> span(@NotNull @NonNull JBlobRange<T> other) {
+    public @NotNull JBlobRange<T> span(@NonNull JBlobRange<T> other) {
         T newStart = this.start.compareTo(other.start) <= 0 ? this.start : other.start;
         T newEnd = this.end.compareTo(other.end) >= 0 ? this.end : other.end;
         boolean newStartInclusive = this.start.compareTo(other.start) == 0
@@ -190,7 +190,7 @@ public final class JBlobRange<T extends Comparable<T>> {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return String.format("Range [%s%s, %s%s", this.startInclusive ? "[" : "(", this.start, this.end, this.endInclusive ? "]" : ")" + "]");
     }
 }

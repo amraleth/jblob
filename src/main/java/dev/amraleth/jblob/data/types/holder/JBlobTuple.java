@@ -36,7 +36,7 @@ public final class JBlobTuple {
      * @param elements The elements to populate the tuple with.
      * @return A new tuple.
      */
-    public static @NotNull JBlobTuple t(@NotNull Object @NotNull ... elements) {
+    public static @NotNull JBlobTuple t(@NonNull Object @NonNull ... elements) {
         return new JBlobTuple(elements.length, elements);
     }
 
@@ -63,7 +63,7 @@ public final class JBlobTuple {
      * @return The result.
      * @throws ClassCastException When the cast is invalid.
      */
-    public <T> @NotNull @NonNull JBlobResult<T> get(int index, @NotNull Class<T> clazz) {
+    public <T> @NotNull JBlobResult<T> get(int index, @NonNull Class<T> clazz) {
         if (this.data.length - 1 < index) {
             return JBlobResult.failure("Index out of bounds", null);
         }

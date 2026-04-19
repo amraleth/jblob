@@ -22,8 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @JBlobThreadSafe
 @JBlobMutable
 public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRepository<K, V> {
-    private final @NotNull
-    @NonNull ConcurrentHashMap<K, V> map;
+    private final @NotNull ConcurrentHashMap<K, V> map;
 
     /**
      * Constructs a new repository.
@@ -33,7 +32,7 @@ public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRe
     }
 
     @Override
-    public @NotNull @NonNull JBlobResult<V> findBy(@NotNull K key) {
+    public @NotNull JBlobResult<V> findBy(@NonNull K key) {
         if (!this.map.containsKey(key)) {
             return JBlobResult.failure("Value for key %s not found".formatted(key), null);
         }
@@ -41,22 +40,22 @@ public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRe
     }
 
     @Override
-    public @NotNull @NonNull @Unmodifiable List<K> getKeys() {
+    public @NotNull @Unmodifiable List<K> getKeys() {
         return this.map.keySet().stream().toList();
     }
 
     @Override
-    public @NotNull @NonNull @Unmodifiable List<V> getValues() {
+    public @NotNull @Unmodifiable List<V> getValues() {
         return this.map.values().stream().toList();
     }
 
     @Override
-    public void insert(@NotNull @NonNull K key, @NotNull @NonNull V value) {
+    public void insert(@NonNull K key, @NonNull V value) {
         this.map.put(key, value);
     }
 
     @Override
-    public void delete(@NotNull @NonNull K key) {
+    public void delete(@NonNull K key) {
         this.map.remove(key);
     }
 
