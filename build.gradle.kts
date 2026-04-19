@@ -48,7 +48,7 @@ publishing {
             pom {
                 name.set("JBlob")
                 description.set("A blob of common java functions and utils")
-                url.set("https://gitlab.com/amraleth/jblob")
+                url.set("https://github.com/amraleth/jblob")
 
                 licenses {
                     license {
@@ -66,9 +66,9 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://gitlab.com/amraleth/jblob.git")
-                    developerConnection.set("scm:git:ssh://gitlab.com/amraleth/jblob.git")
-                    url.set("https://gitlab.com/amraleth/jblob")
+                    connection.set("scm:git:git://github.com/amraleth/jblob.git")
+                    developerConnection.set("scm:git:ssh://github.com/amraleth/jblob.git")
+                    url.set("https://github.com/amraleth/jblob")
                 }
             }
         }
