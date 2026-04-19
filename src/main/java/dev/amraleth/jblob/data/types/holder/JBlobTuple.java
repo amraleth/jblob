@@ -24,10 +24,9 @@ public final class JBlobTuple {
     /**
      * Private constructor for constructing a new tuple.
      *
-     * @param size     The size of the tuple.
      * @param elements The elements to populate the tuple with.
      */
-    private JBlobTuple(int size, @NotNull Object... elements) {
+    private JBlobTuple(@NotNull Object... elements) {
         this.data = Arrays.copyOf(elements, elements.length);
     }
 
@@ -35,10 +34,9 @@ public final class JBlobTuple {
      * Constructs a new tuple with elements.
      *
      * @param elements The elements to populate the tuple with.
-     * @param <T>      The type of the tuple.
      * @return A new tuple.
      */
-    public static <T> @NotNull JBlobTuple t(@NotNull Object @NotNull ... elements) {
+    public static @NotNull JBlobTuple t(@NotNull Object @NotNull ... elements) {
         return new JBlobTuple(elements.length, elements);
     }
 

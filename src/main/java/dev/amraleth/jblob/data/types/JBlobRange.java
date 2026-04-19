@@ -28,7 +28,9 @@ import java.util.Optional;
 @JBlobThreadSafe(notes = "If T is an immutable type")
 @JBlobImmutable
 public final class JBlobRange<T extends Comparable<T>> {
+    @Getter
     private final T start;
+    @Getter
     private final T end;
     @Getter
     private final boolean startInclusive;
@@ -185,24 +187,6 @@ public final class JBlobRange<T extends Comparable<T>> {
                 : (this.end.compareTo(other.end) >= 0 ? this.endInclusive : other.endInclusive);
 
         return new JBlobRange<>(newStart, newEnd, newStartInclusive, newEndInclusive);
-    }
-
-    /**
-     * Gets the start of the range.
-     *
-     * @return The start.
-     */
-    public @NotNull @NonNull T getStart() {
-        return this.start;
-    }
-
-    /**
-     * Gets the end of the range.
-     *
-     * @return The end.
-     */
-    public @NotNull @NonNull T getEnd() {
-        return this.end;
     }
 
     @Override
