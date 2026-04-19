@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.amraleth/jblob)](https://central.sonatype.com/artifact/dev.amraleth/jblob)
 
-A java blob of common functions and abstractions I typically use on projects.
+A java blob of common functions and abstractions I typically use on projects. For usage please consult the [Wiki](https://gitlab.com/Amraleth/jblob/-/wikis/pages).
 
 ## Installation
 
