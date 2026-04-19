@@ -62,7 +62,6 @@ import java.util.function.Predicate;
 @JBlobThreadSafe(notes = "If T is an immutable type")
 @JBlobImmutable
 public final class JBlobValidate<T> {
-
     private final @Nullable T value;
     private final @NotNull List<String> errors;
 

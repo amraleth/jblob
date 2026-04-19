@@ -2,7 +2,6 @@ package dev.amraleth.jblob.reflection;
 
 import dev.amraleth.jblob.annotation.JBlobStaticClass;
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

@@ -3,7 +3,6 @@ package dev.amraleth.jblob;
 import dev.amraleth.jblob.annotation.JBlobStaticClass;
 import dev.amraleth.jblob.exception.JBlobAssertException;
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;

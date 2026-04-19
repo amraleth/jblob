@@ -26,7 +26,7 @@ import dev.amraleth.jblob.annotation.JBlobStaticClass;
  */
 
 @JBlobStaticClass
-public class JBlobBitFlag {
+public final class JBlobBitFlag {
 
     /**
      * Private constructor.

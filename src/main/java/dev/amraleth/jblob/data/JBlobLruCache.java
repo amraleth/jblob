@@ -44,7 +44,7 @@ import java.util.function.Function;
  */
 @JBlobThreadSafe(notes = "If K and V are immutable types")
 @JBlobMutable
-@JBlobExperimental
+@JBlobExperimental(reason = "Untested yet")
 public final class JBlobLruCache<K, V> {
     private final int maxSize;
     private final @NotNull Map<K, V> store;

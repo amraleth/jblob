@@ -1,7 +1,6 @@
 package dev.amraleth.jblob.func;
 
 import dev.amraleth.jblob.annotation.JBlobStaticClass;
-import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
 
 import java.net.URI;

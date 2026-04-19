@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.amraleth"
-version = "1.5.0"
+version = "1.6.0"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    compileOnly("org.jetbrains:annotations:26.0.2")
+    api("org.jetbrains:annotations:26.0.2")
 }
 
 tasks.test {
