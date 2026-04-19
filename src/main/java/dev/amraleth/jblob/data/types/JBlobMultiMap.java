@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types;
 
 import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -31,7 +32,8 @@ import java.util.function.BiConsumer;
 @JBlobMutable
 @JBlobThreadSafe(notes = "If K and V are immutable types.")
 public final class JBlobMultiMap<K, V> {
-    private final @NotNull Map<K, List<V>> store;
+    private final @NotNull
+    @NonNull Map<K, List<V>> store;
 
     /**
      * Private constructor for creating a new multi map.
@@ -47,7 +49,7 @@ public final class JBlobMultiMap<K, V> {
      * @param <V> The type of values.
      * @return A new empty multi map.
      */
-    public static <K, V> @NotNull JBlobMultiMap<K, V> create() {
+    public static <K, V> @NotNull @NonNull JBlobMultiMap<K, V> create() {
         return new JBlobMultiMap<>();
     }
 
@@ -60,7 +62,7 @@ public final class JBlobMultiMap<K, V> {
      * @param <V> The type of values.
      * @return A new multi map.
      */
-    public static <K, V> @NotNull JBlobMultiMap<K, V> fromMap(@NotNull Map<K, V> map) {
+    public static <K, V> @NotNull @NonNull JBlobMultiMap<K, V> fromMap(@NotNull @NonNull Map<K, V> map) {
         JBlobMultiMap<K, V> multiMap = new JBlobMultiMap<>();
         map.forEach(multiMap::put);
         return multiMap;
@@ -73,7 +75,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key   The key.
      * @param value The value.
      */
-    public synchronized void put(@NotNull K key, @NotNull V value) {
+    public synchronized void put(@NotNull @NonNull K key, @NotNull @NonNull V value) {
         this.store.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
 
@@ -83,7 +85,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key    The key.
      * @param values The values to associate with the key.
      */
-    public synchronized void putAll(@NotNull K key, @NotNull Collection<V> values) {
+    public synchronized void putAll(@NotNull @NonNull K key, @NotNull @NonNull Collection<V> values) {
         this.store.computeIfAbsent(key, k -> new ArrayList<>()).addAll(values);
     }
 
@@ -93,7 +95,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key.
      * @return A result containing an unmodifiable list of values, or a failure if the key is not present.
      */
-    public synchronized @NotNull JBlobResult<List<V>> get(@NotNull K key) {
+    public synchronized @NotNull @NonNull JBlobResult<List<V>> get(@NotNull @NonNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
             return JBlobResult.failure("No values found for key %s".formatted(key), null);
@@ -107,7 +109,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key.
      * @return A result containing the first value, or a failure if the key is not present.
      */
-    public synchronized @NotNull JBlobResult<V> getFirst(@NotNull K key) {
+    public synchronized @NotNull @NonNull JBlobResult<V> getFirst(@NotNull @NonNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
             return JBlobResult.failure("No values found for key %s".formatted(key), null);
@@ -121,7 +123,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key.
      * @return A result containing the last value, or a failure if the key is not present.
      */
-    public synchronized @NotNull JBlobResult<V> getLast(@NotNull K key) {
+    public synchronized @NotNull @NonNull JBlobResult<V> getLast(@NotNull @NonNull K key) {
         List<V> values = this.store.get(key);
         if (values == null || values.isEmpty()) {
             return JBlobResult.failure("No values found for key %s".formatted(key), null);
@@ -135,7 +137,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key to remove.
      * @return True if the key was present and removed, false otherwise.
      */
-    public synchronized boolean removeKey(@NotNull K key) {
+    public synchronized boolean removeKey(@NotNull @NonNull K key) {
         return this.store.remove(key) != null;
     }
 
@@ -146,7 +148,7 @@ public final class JBlobMultiMap<K, V> {
      * @param value The specific value to remove.
      * @return True if the value was present and removed, false otherwise.
      */
-    public synchronized boolean removeValue(@NotNull K key, @NotNull V value) {
+    public synchronized boolean removeValue(@NotNull @NonNull K key, @NotNull @NonNull V value) {
         List<V> values = this.store.get(key);
         if (values == null) return false;
         boolean removed = values.remove(value);
@@ -160,7 +162,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key to check.
      * @return True if the key is present, false otherwise.
      */
-    public synchronized boolean containsKey(@NotNull K key) {
+    public synchronized boolean containsKey(@NotNull @NonNull K key) {
         return this.store.containsKey(key);
     }
 
@@ -171,7 +173,7 @@ public final class JBlobMultiMap<K, V> {
      * @param value The value.
      * @return True if the key-value pair is present, false otherwise.
      */
-    public synchronized boolean containsEntry(@NotNull K key, @NotNull V value) {
+    public synchronized boolean containsEntry(@NotNull @NonNull K key, @NotNull @NonNull V value) {
         List<V> values = this.store.get(key);
         return values != null && values.contains(value);
     }
@@ -200,7 +202,7 @@ public final class JBlobMultiMap<K, V> {
      * @param key The key.
      * @return The value count for the key, or 0 if the key is not present.
      */
-    public synchronized int valueSize(@NotNull K key) {
+    public synchronized int valueSize(@NotNull @NonNull K key) {
         List<V> values = this.store.get(key);
         return values == null ? 0 : values.size();
     }
@@ -226,7 +228,7 @@ public final class JBlobMultiMap<K, V> {
      *
      * @return The key set.
      */
-    public synchronized @NotNull @Unmodifiable Set<K> keySet() {
+    public synchronized @NotNull @NonNull @Unmodifiable Set<K> keySet() {
         return Collections.unmodifiableSet(this.store.keySet());
     }
 
@@ -235,7 +237,7 @@ public final class JBlobMultiMap<K, V> {
      *
      * @param action The action to perform.
      */
-    public synchronized void forEach(@NotNull BiConsumer<K, List<V>> action) {
+    public synchronized void forEach(@NotNull @NonNull BiConsumer<K, List<V>> action) {
         this.store.forEach(action);
     }
 
@@ -245,7 +247,7 @@ public final class JBlobMultiMap<K, V> {
      *
      * @return An unmodifiable snapshot.
      */
-    public synchronized @NotNull @Unmodifiable Map<K, List<V>> snapshot() {
+    public synchronized @NotNull @NonNull @Unmodifiable Map<K, List<V>> snapshot() {
         Map<K, List<V>> copy = new HashMap<>();
         this.store.forEach((k, v) -> copy.put(k, List.copyOf(v)));
         return Collections.unmodifiableMap(copy);

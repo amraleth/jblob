@@ -1,5 +1,7 @@
 package dev.amraleth.jblob.annotation;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.annotation.*;
 
 /**
@@ -21,7 +23,7 @@ public @interface JBlobThreadSafe {
      *
      * @return Since when the class is thread-safe.
      */
-    String since() default "";
+    @Nullable String since() default "";
 
     /**
      * An optional argument for additional notes about either the usage of the class, or if restrictions apply for when
@@ -29,5 +31,5 @@ public @interface JBlobThreadSafe {
      *
      * @return Additional notes.
      */
-    String notes() default "";
+    @Nullable String notes() default "";
 }

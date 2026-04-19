@@ -1,5 +1,7 @@
 package dev.amraleth.jblob.annotation;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.annotation.*;
 
 /**
@@ -19,19 +21,19 @@ public @interface JBlobExperimental {
      *
      * @return Reason.
      */
-    String reason() default "";
+    @Nullable String reason() default "";
 
     /**
      * An optional argument indicating since when it is marked as experimental.
      *
      * @return Since when.
      */
-    String since() default "";
+    @Nullable String since() default "";
 
     /**
      * An optional argument indicating until when it is marked as experimental.
      *
      * @return Until when.
      */
-    String until() default "";
+    @Nullable String until() default "";
 }

@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types.holder;
 
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,12 +27,12 @@ public record JBlobPair<F, S>(@Nullable F first, @Nullable S second) {
      * @param <U>   The new type of the value to add.
      * @return A new triple with the third value set to the argument.
      */
-    public <U> @NotNull JBlobTriple<F, S, U> toTriple(@Nullable U third) {
+    public <U> @NotNull @NonNull JBlobTriple<F, S, U> toTriple(@Nullable U third) {
         return new JBlobTriple<>(this.first, this.second, third);
     }
 
     @Override
-    public @NotNull String toString() {
+    public @NotNull @NonNull String toString() {
         return "Pair [first=" + this.first + " second=" + this.second + "]";
     }
 }

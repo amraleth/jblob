@@ -1,5 +1,8 @@
 package dev.amraleth.jblob.annotation;
 
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.annotation.*;
 
 /**
@@ -19,19 +22,19 @@ public @interface JBlobDeprecated {
      *
      * @return The reason.
      */
-    String reason();
+    @NotNull @NonNull String reason();
 
     /**
      * An optional argument for what this is being replaced with.
      *
      * @return Replaced with.
      */
-    String replacedBy() default "";
+    @NotNull String replacedBy() default "";
 
     /**
      * An optional argument for since when this has been deprecated.
      *
      * @return Since when.
      */
-    String since() default "";
+    @NotNull String since() default "";
 }

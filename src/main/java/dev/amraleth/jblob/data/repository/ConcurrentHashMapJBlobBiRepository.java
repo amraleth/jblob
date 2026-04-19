@@ -3,6 +3,7 @@ package dev.amraleth.jblob.data.repository;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -21,7 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @JBlobThreadSafe
 @JBlobMutable
 public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRepository<K, V> {
-    private final ConcurrentHashMap<K, V> map;
+    private final @NotNull
+    @NonNull ConcurrentHashMap<K, V> map;
 
     /**
      * Constructs a new repository.
@@ -31,7 +33,7 @@ public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRe
     }
 
     @Override
-    public @NotNull JBlobResult<V> findBy(@NotNull K key) {
+    public @NotNull @NonNull JBlobResult<V> findBy(@NotNull K key) {
         if (!this.map.containsKey(key)) {
             return JBlobResult.failure("Value for key %s not found".formatted(key), null);
         }
@@ -39,22 +41,22 @@ public final class ConcurrentHashMapJBlobBiRepository<K, V> implements JBlobBiRe
     }
 
     @Override
-    public @NotNull @Unmodifiable List<K> getKeys() {
+    public @NotNull @NonNull @Unmodifiable List<K> getKeys() {
         return this.map.keySet().stream().toList();
     }
 
     @Override
-    public @NotNull @Unmodifiable List<V> getValues() {
+    public @NotNull @NonNull @Unmodifiable List<V> getValues() {
         return this.map.values().stream().toList();
     }
 
     @Override
-    public void insert(@NotNull K key, @NotNull V value) {
+    public void insert(@NotNull @NonNull K key, @NotNull @NonNull V value) {
         this.map.put(key, value);
     }
 
     @Override
-    public void delete(@NotNull K key) {
+    public void delete(@NotNull @NonNull K key) {
         this.map.remove(key);
     }
 

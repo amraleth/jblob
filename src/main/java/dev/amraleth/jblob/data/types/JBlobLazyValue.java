@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types;
 
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +25,8 @@ import java.util.function.Supplier;
 @JBlobThreadSafe(notes = "If T is an immutable type")
 @JBlobImmutable
 public final class JBlobLazyValue<T> {
-    private final @NotNull Supplier<T> supplier;
+    private final @NotNull
+    @NonNull Supplier<T> supplier;
     private volatile @Nullable T value;
     private volatile boolean initialized;
 
@@ -33,7 +35,7 @@ public final class JBlobLazyValue<T> {
      *
      * @param supplier The supplier that supplies the value to this lazy value.
      */
-    private JBlobLazyValue(@NotNull Supplier<T> supplier) {
+    private JBlobLazyValue(@NotNull @NonNull Supplier<T> supplier) {
         this.supplier = supplier;
         this.value = null;
         this.initialized = false;
@@ -46,7 +48,7 @@ public final class JBlobLazyValue<T> {
      * @param <T>      The type of the value.
      * @return A new lazy value.
      */
-    public static <T> @NotNull JBlobLazyValue<T> of(@NotNull Supplier<T> supplier) {
+    public static <T> @NotNull @NonNull JBlobLazyValue<T> of(@NotNull @NonNull Supplier<T> supplier) {
         return new JBlobLazyValue<>(supplier);
     }
 
@@ -57,7 +59,7 @@ public final class JBlobLazyValue<T> {
      * @param <T>   The type of the value.
      * @return A new lazy value.
      */
-    public static <T> @NotNull JBlobLazyValue<T> ofValue(@NotNull T value) {
+    public static <T> @NotNull @NonNull JBlobLazyValue<T> ofValue(@NotNull @NonNull T value) {
         JBlobLazyValue<T> lazy = new JBlobLazyValue<>(() -> value);
         lazy.value = value;
         lazy.initialized = true;
@@ -87,7 +89,7 @@ public final class JBlobLazyValue<T> {
      *
      * @return The optional value.
      */
-    public @NotNull Optional<T> getIfInitialized() {
+    public @NotNull @NonNull Optional<T> getIfInitialized() {
         synchronized (this) {
             return this.initialized ? Optional.ofNullable(this.value) : Optional.empty();
         }
@@ -99,7 +101,7 @@ public final class JBlobLazyValue<T> {
      * @param fallback The fallback value.
      * @return The value or fallback.
      */
-    public @Nullable T orElse(@NotNull T fallback) {
+    public @Nullable T orElse(@NotNull @NonNull T fallback) {
         synchronized (this) {
             return this.initialized ? this.value : fallback;
         }
@@ -111,7 +113,7 @@ public final class JBlobLazyValue<T> {
      * @param fallback The fallback supplier supplying the fallback value.
      * @return The value or fallback.
      */
-    public @Nullable T orElseGet(@NotNull Supplier<T> fallback) {
+    public @Nullable T orElseGet(@NotNull @NonNull Supplier<T> fallback) {
         synchronized (this) {
             return this.initialized ? this.value : fallback.get();
         }
@@ -135,7 +137,7 @@ public final class JBlobLazyValue<T> {
      * @param <U>    Generic U.
      * @return The lazy value for chaining.
      */
-    public <U> @NotNull JBlobLazyValue<U> map(@NotNull Function<T, U> mapper) {
+    public <U> @NotNull @NonNull JBlobLazyValue<U> map(@NotNull @NonNull Function<T, U> mapper) {
         return JBlobLazyValue.of(() -> mapper.apply(this.get()));
     }
 
@@ -146,7 +148,7 @@ public final class JBlobLazyValue<T> {
      * @param <U>    Generic U.
      * @return The lazy value for chaining.
      */
-    public <U> @NotNull JBlobLazyValue<U> flatMap(@NotNull Function<T, JBlobLazyValue<U>> mapper) {
+    public <U> @NotNull @NonNull JBlobLazyValue<U> flatMap(@NotNull @NonNull Function<T, JBlobLazyValue<U>> mapper) {
         return JBlobLazyValue.of(() -> mapper.apply(this.get()).get());
     }
 

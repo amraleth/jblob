@@ -1,5 +1,7 @@
 package dev.amraleth.jblob.annotation.mutability;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.lang.annotation.*;
 
 /**
@@ -20,5 +22,5 @@ public @interface JBlobMutable {
      *
      * @return Additional notes.
      */
-    String notes() default "";
+    @Nullable String notes() default "";
 }

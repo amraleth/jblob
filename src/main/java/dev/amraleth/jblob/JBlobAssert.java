@@ -2,6 +2,7 @@ package dev.amraleth.jblob;
 
 import dev.amraleth.jblob.annotation.JBlobStaticClass;
 import dev.amraleth.jblob.exception.JBlobAssertException;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,8 +37,8 @@ public final class JBlobAssert {
      * @return The input value's type.
      * @throws IllegalArgumentException If the predicate fails.
      */
-    public static <T> @Nullable T assertion(@Nullable T value, @NotNull Predicate<T> predicate, @NotNull String format,
-                                            @NotNull Object... formats) {
+    public static <T> @Nullable T assertion(@Nullable T value, @NotNull @NonNull Predicate<T> predicate,
+                                            @NotNull @NonNull String format, @NotNull @NonNull Object... formats) {
         if (!predicate.test(value)) {
             throw new JBlobAssertException(String.format(format, formats));
         }
@@ -112,8 +113,8 @@ public final class JBlobAssert {
      * @return The first value.
      */
     public static <T, K> @Nullable T biAssertion(@Nullable T first, @Nullable K second,
-                                                 @NotNull BiPredicate<T, K> predicate, @NotNull String format,
-                                                 @NotNull Object... formats) {
+                                                 @NotNull @NonNull BiPredicate<T, K> predicate,
+                                                 @NotNull @NonNull String format, @NotNull @NonNull Object... formats) {
         if (!predicate.test(first, second)) {
             throw new JBlobAssertException(String.format(format, formats));
         }

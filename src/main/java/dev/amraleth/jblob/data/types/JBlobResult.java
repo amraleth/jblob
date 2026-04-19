@@ -2,6 +2,7 @@ package dev.amraleth.jblob.data.types;
 
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +48,7 @@ public final class JBlobResult<T> {
      * @param <T>   The type of data this result holds.
      * @return A new result.
      */
-    public static <T> @NotNull JBlobResult<T> success(@Nullable T value) {
+    public static <T> @NotNull @NonNull JBlobResult<T> success(@Nullable T value) {
         return new JBlobResult<>(value, true, null, null);
     }
 
@@ -59,7 +60,7 @@ public final class JBlobResult<T> {
      * @param exception    An optional exception thrown on failure.
      * @return A new result.
      */
-    public static <T> @NotNull JBlobResult<T> failure(@Nullable String errorMessage, @Nullable Exception exception) {
+    public static <T> @NotNull @NonNull JBlobResult<T> failure(@Nullable String errorMessage, @Nullable Exception exception) {
         return new JBlobResult<>(null, false, errorMessage, exception);
     }
 
@@ -96,7 +97,7 @@ public final class JBlobResult<T> {
      * @param fallback The fallback to return when the result is not a success.
      * @return The value or the fallback.
      */
-    public @Nullable T orElse(@NotNull T fallback) {
+    public @Nullable T orElse(@NotNull @NonNull T fallback) {
         return this.success ? this.value : fallback;
     }
 
@@ -129,7 +130,7 @@ public final class JBlobResult<T> {
      * @param <U>    U generic type.
      * @return The constructed result.
      */
-    public <U> @NotNull JBlobResult<U> map(@NotNull Function<T, U> mapper) {
+    public <U> @NotNull @NonNull JBlobResult<U> map(@NotNull @NonNull Function<T, U> mapper) {
         if (this.success) {
             return JBlobResult.success(mapper.apply(this.value));
         }
@@ -143,7 +144,7 @@ public final class JBlobResult<T> {
      * @param <U>    The type of the result.
      * @return The result of the operation.
      */
-    public <U> @NotNull JBlobResult<U> flatMap(@NotNull Function<T, JBlobResult<U>> mapper) {
+    public <U> @NotNull @NonNull JBlobResult<U> flatMap(@NotNull @NonNull Function<T, JBlobResult<U>> mapper) {
         if (this.success) {
             return mapper.apply(this.value);
         }
@@ -156,7 +157,7 @@ public final class JBlobResult<T> {
      * @param then The action to run.
      * @return The result.
      */
-    public @NotNull JBlobResult<T> ifSuccess(@NotNull Consumer<T> then) {
+    public @NotNull @NonNull JBlobResult<T> ifSuccess(@NotNull @NonNull Consumer<T> then) {
         if (this.success) then.accept(this.value);
         return this;
     }
@@ -167,7 +168,7 @@ public final class JBlobResult<T> {
      * @param then The action to run.
      * @return The result.
      */
-    public @NotNull JBlobResult<T> ifFailure(@NotNull BiConsumer<String, Exception> then) {
+    public @NotNull @NonNull JBlobResult<T> ifFailure(@NotNull @NonNull BiConsumer<String, Exception> then) {
         if (!this.success) then.accept(this.errorMessage, this.exception);
         return this;
     }

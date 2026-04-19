@@ -2,6 +2,7 @@ package dev.amraleth.jblob.func;
 
 import dev.amraleth.jblob.data.types.JBlobLazyValue;
 import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +33,7 @@ public interface JBlobThrowingSupplier<T> {
      *
      * @return The supplier.
      */
-    default @NotNull Supplier<T> toSupplier() {
+    default @NotNull @NonNull Supplier<T> toSupplier() {
         return () -> {
             try {
                 return this.get();
@@ -47,7 +48,7 @@ public interface JBlobThrowingSupplier<T> {
      *
      * @return The result.
      */
-    default @NotNull Supplier<JBlobResult<T>> toResult() {
+    default @NotNull @NonNull Supplier<JBlobResult<T>> toResult() {
         return () -> {
             try {
                 return JBlobResult.success(this.get());
@@ -62,7 +63,7 @@ public interface JBlobThrowingSupplier<T> {
      *
      * @return The lazy value.
      */
-    default @NotNull JBlobLazyValue<T> toLazy() {
+    default @NotNull @NonNull JBlobLazyValue<T> toLazy() {
         return JBlobLazyValue.of(this.toSupplier());
     }
 
@@ -74,7 +75,7 @@ public interface JBlobThrowingSupplier<T> {
      * @param <T>      The type of value.
      * @return The value or the fallback.
      */
-    static <T> @Nullable T getOrElse(@NotNull JBlobThrowingSupplier<T> supplier, T fallback) {
+    static <T> @Nullable T getOrElse(@NotNull @NonNull JBlobThrowingSupplier<T> supplier, T fallback) {
         try {
             return supplier.get();
         } catch (Exception e) {
@@ -89,7 +90,7 @@ public interface JBlobThrowingSupplier<T> {
      * @param <T>      The type of value.
      * @return The value.
      */
-    static <T> @Nullable T getOrThrow(@NotNull JBlobThrowingSupplier<T> supplier) {
+    static <T> @Nullable T getOrThrow(@NotNull @NonNull JBlobThrowingSupplier<T> supplier) {
         try {
             return supplier.get();
         } catch (Exception e) {

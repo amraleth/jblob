@@ -5,6 +5,7 @@ import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
 import dev.amraleth.jblob.data.types.holder.JBlobPair;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -46,7 +47,8 @@ import java.util.function.Function;
 @JBlobExperimental
 public final class JBlobLruCache<K, V> {
     private final int maxSize;
-    private final @NotNull Map<K, V> store;
+    private final @NotNull
+    @NonNull Map<K, V> store;
     private final @Nullable BiConsumer<K, V> evictionListener;
 
     private long hits;
@@ -80,7 +82,7 @@ public final class JBlobLruCache<K, V> {
          * @param listener The consumer to consume the data when an entry is evicted.
          * @return This.
          */
-        public @NotNull Builder<K, V> onEviction(@NotNull BiConsumer<K, V> listener) {
+        public @NotNull @NonNull Builder<K, V> onEviction(@NotNull @NonNull BiConsumer<K, V> listener) {
             this.evictionListener = listener;
             return this;
         }
@@ -90,7 +92,7 @@ public final class JBlobLruCache<K, V> {
          *
          * @return The instance.
          */
-        public @NotNull JBlobLruCache<K, V> build() {
+        public @NotNull @NonNull JBlobLruCache<K, V> build() {
             return new JBlobLruCache<>(this);
         }
     }
@@ -103,7 +105,7 @@ public final class JBlobLruCache<K, V> {
      * @param <V>     The type of the values of the builder.
      * @return A new builder.
      */
-    public static <K, V> @NotNull Builder<K, V> builder(int maxSize) {
+    public static <K, V> @NotNull @NonNull Builder<K, V> builder(int maxSize) {
         return new Builder<>(maxSize);
     }
 
@@ -115,7 +117,7 @@ public final class JBlobLruCache<K, V> {
      * @param maxSize The maximum size.
      * @return A new instance of the lru cache.
      */
-    public static <K, V> @NotNull JBlobLruCache<K, V> of(int maxSize) {
+    public static <K, V> @NotNull @NonNull JBlobLruCache<K, V> of(int maxSize) {
         return JBlobLruCache.<K, V>builder(maxSize).build();
     }
 
@@ -124,7 +126,7 @@ public final class JBlobLruCache<K, V> {
      *
      * @param builder The builder to apply at build step.
      */
-    private JBlobLruCache(@NotNull Builder<K, V> builder) {
+    private JBlobLruCache(@NotNull @NonNull Builder<K, V> builder) {
         this.maxSize = builder.maxSize;
         this.evictionListener = builder.evictionListener;
         this.store = new LinkedHashMap<>(16, 0.75f, /* accessOrder= */ true) {
@@ -148,7 +150,7 @@ public final class JBlobLruCache<K, V> {
      * @param key   The key to put.
      * @param value The value to put in.
      */
-    public synchronized void put(@NotNull K key, @NotNull V value) {
+    public synchronized void put(@NotNull @NonNull K key, @NotNull @NonNull V value) {
         this.store.put(key, value);
     }
 
@@ -157,7 +159,7 @@ public final class JBlobLruCache<K, V> {
      *
      * @param pair The pair to put in.
      */
-    public synchronized void put(@NotNull JBlobPair<K, V> pair) {
+    public synchronized void put(@NotNull @NonNull JBlobPair<K, V> pair) {
         this.store.put(pair.first(), pair.second());
     }
 
@@ -167,7 +169,7 @@ public final class JBlobLruCache<K, V> {
      * @param key The key to get the value for.
      * @return The result.
      */
-    public synchronized @NotNull JBlobResult<V> get(@NotNull K key) {
+    public synchronized @NotNull @NonNull JBlobResult<V> get(@NotNull @NonNull K key) {
         V value = this.store.get(key);
         if (value != null) {
             hits++;
@@ -189,9 +191,9 @@ public final class JBlobLruCache<K, V> {
      * @param loader The loader to compute this for.
      * @return The value.
      */
-    public synchronized @NotNull V getOrCompute(
-            @NotNull K key,
-            @NotNull Function<K, V> loader
+    public synchronized @NotNull @NonNull V getOrCompute(
+            @NotNull @NonNull K key,
+            @NotNull @NonNull Function<K, V> loader
     ) {
         V existing = this.store.get(key);
         if (existing != null) {
@@ -211,7 +213,7 @@ public final class JBlobLruCache<K, V> {
      * @param updater The function applied to update the value.
      * @return True if the entry was present and updated, false if it was a no-op.
      */
-    public synchronized boolean updateIfPresent(@NotNull K key, @NotNull Function<V, V> updater) {
+    public synchronized boolean updateIfPresent(@NotNull @NonNull K key, @NotNull @NonNull Function<V, V> updater) {
         V existing = this.store.get(key);
         if (existing == null) return false;
         this.store.put(key, updater.apply(existing));
@@ -223,7 +225,7 @@ public final class JBlobLruCache<K, V> {
      *
      * @param key The key to get the value for.
      */
-    public synchronized void invalidate(@NotNull K key) {
+    public synchronized void invalidate(@NotNull @NonNull K key) {
         this.store.remove(key);
     }
 
@@ -240,7 +242,7 @@ public final class JBlobLruCache<K, V> {
      * @param key The key to check for.
      * @return True if present, otherwise false.
      */
-    public synchronized boolean containsKey(@NotNull K key) {
+    public synchronized boolean containsKey(@NotNull @NonNull K key) {
         return this.store.containsKey(key);
     }
 
@@ -277,7 +279,7 @@ public final class JBlobLruCache<K, V> {
      *
      * @return An unmodifiable map of the cache.
      */
-    public synchronized @NotNull @Unmodifiable Map<K, V> snapshot() {
+    public synchronized @NotNull @NonNull @Unmodifiable Map<K, V> snapshot() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(this.store));
     }
 
@@ -286,7 +288,7 @@ public final class JBlobLruCache<K, V> {
      *
      * @return The stats.
      */
-    public synchronized @NotNull Stats stats() {
+    public synchronized @NotNull @NonNull Stats stats() {
         return new Stats(this.hits, this.misses, this.evictions);
     }
 
@@ -368,7 +370,7 @@ public final class JBlobLruCache<K, V> {
         }
 
         @Override
-        public @NotNull String toString() {
+        public @NotNull @NonNull String toString() {
             return String.format(
                     "Stats{hits=%d, misses=%d, evictions=%d, hitRate=%.1f%%}",
                     hits, misses, evictions, hitRate() * 100

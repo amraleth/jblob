@@ -4,10 +4,11 @@ plugins {
     `maven-publish`
     id("com.gradleup.nmcp") version "0.0.8"
     `java-library`
+    id("io.freefair.lombok") version "9.2.0"
 }
 
 group = "dev.amraleth"
-version = "1.2.0"
+version = "1.3.0"
 
 repositories {
     mavenCentral()

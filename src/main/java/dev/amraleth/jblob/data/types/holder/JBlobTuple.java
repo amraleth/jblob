@@ -3,6 +3,7 @@ package dev.amraleth.jblob.data.types.holder;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -64,7 +65,7 @@ public final class JBlobTuple {
      * @return The result.
      * @throws ClassCastException When the cast is invalid.
      */
-    public <T> @NotNull JBlobResult<T> get(int index, @NotNull Class<T> clazz) {
+    public <T> @NotNull @NonNull JBlobResult<T> get(int index, @NotNull Class<T> clazz) {
         if (this.data.length - 1 < index) {
             return JBlobResult.failure("Index out of bounds", null);
         }

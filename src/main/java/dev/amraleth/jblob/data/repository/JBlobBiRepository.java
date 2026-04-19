@@ -1,6 +1,7 @@
 package dev.amraleth.jblob.data.repository;
 
 import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -24,7 +25,9 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * @param key The key to search for.
      * @return The value if no match was found.
      */
-    @NotNull JBlobResult<V> findBy(@NotNull K key);
+    @NotNull
+    @NonNull
+    JBlobResult<V> findBy(@NotNull K key);
 
     /**
      * Gets a list of all keys.
@@ -34,6 +37,7 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * information about weather this is a cloned list or a reference.
      */
     @NotNull
+    @NonNull
     @Unmodifiable
     List<K> getKeys();
 
@@ -45,6 +49,7 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * information about weather this is a cloned list or a reference.
      */
     @NotNull
+    @NonNull
     @Unmodifiable
     List<V> getValues();
 
@@ -54,14 +59,14 @@ public sealed interface JBlobBiRepository<K, V> permits ConcurrentHashMapJBlobBi
      * @param key   The key to insert.
      * @param value The value to insert.
      */
-    void insert(@NotNull K key, @NotNull V value);
+    void insert(@NotNull @NonNull K key, @NotNull @NonNull V value);
 
     /**
      * Removes an entry from the repository.
      *
      * @param key The key to remove the associated pair of.
      */
-    void delete(@NotNull K key);
+    void delete(@NotNull @NonNull K key);
 
     /**
      * Gets the total count of entries in the repository.

@@ -3,6 +3,7 @@ package dev.amraleth.jblob.data;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -63,7 +64,8 @@ import java.util.function.Predicate;
 public final class JBlobValidate<T> {
 
     private final @Nullable T value;
-    private final @NotNull List<String> errors;
+    private final @NotNull
+    @NonNull List<String> errors;
 
     /**
      * Private constructor for creating a new validator.
@@ -71,7 +73,7 @@ public final class JBlobValidate<T> {
      * @param value  The value.
      * @param errors The list of errors;
      */
-    private JBlobValidate(@Nullable T value, @NotNull List<String> errors) {
+    private JBlobValidate(@Nullable T value, @NotNull @NonNull List<String> errors) {
         this.value = value;
         this.errors = Collections.unmodifiableList(errors);
     }
@@ -80,10 +82,10 @@ public final class JBlobValidate<T> {
      * Starts a validation chain for the given value.
      *
      * @param value The value to start the chain for.
-     * @param <T> The type of the validator.
+     * @param <T>   The type of the validator.
      * @return New validator.
      */
-    public static <T> @NotNull JBlobValidate<T> of(@Nullable T value) {
+    public static <T> @NotNull @NonNull JBlobValidate<T> of(@Nullable T value) {
         return new JBlobValidate<>(value, Collections.emptyList());
     }
 
@@ -93,7 +95,7 @@ public final class JBlobValidate<T> {
      * @param message The message to send if the assertion fails.
      * @return The validator for chaining.
      */
-    public @NotNull JBlobValidate<T> notNull(@NotNull String message) {
+    public @NotNull @NonNull JBlobValidate<T> notNull(@NotNull @NonNull String message) {
         if (this.value != null) return this;
         return withError(message);
     }
@@ -106,9 +108,9 @@ public final class JBlobValidate<T> {
      * @param message   The message to send if the predicate fails.
      * @return The validator for chaining.
      */
-    public @NotNull JBlobValidate<T> validate(
-            @NotNull Predicate<T> predicate,
-            @NotNull String message
+    public @NotNull @NonNull JBlobValidate<T> validate(
+            @NotNull @NonNull Predicate<T> predicate,
+            @NotNull @NonNull String message
     ) {
         if (this.value == null || predicate.test(this.value)) return this;
         return withError(message);
@@ -121,7 +123,7 @@ public final class JBlobValidate<T> {
      * @param fieldName The name of the field.
      * @param extractor The extractor to run on the field.
      * @param rules     The rules to apply on the value.
-     * @param <F> The return type of the extractor.
+     * @param <F>       The return type of the extractor.
      * @return The new validator.
      *
      * <pre>{@code
@@ -132,10 +134,10 @@ public final class JBlobValidate<T> {
      *         .validate(s -> s.contains("@"), "must be a valid email"))
      * }</pre>
      */
-    public <F> @NotNull JBlobValidate<T> field(
-            @NotNull String fieldName,
-            @NotNull Function<T, F> extractor,
-            @NotNull Function<JBlobValidate<F>, JBlobValidate<F>> rules
+    public <F> @NotNull @NonNull JBlobValidate<T> field(
+            @NotNull @NonNull String fieldName,
+            @NotNull @NonNull Function<T, F> extractor,
+            @NotNull @NonNull Function<JBlobValidate<F>, JBlobValidate<F>> rules
     ) {
         if (this.value == null) return this;
         JBlobValidate<F> fieldValidation = rules.apply(JBlobValidate.of(extractor.apply(value)));
@@ -153,10 +155,10 @@ public final class JBlobValidate<T> {
      * If there are already errors, the mapper is skipped and errors are preserved.
      *
      * @param mapper The mapping to apply.
+     * @param <U>    The Type of the validator.
      * @return A new validator.
-     * @param <U> The Type of the validator.
      */
-    public <U> @NotNull JBlobValidate<U> map(@NotNull Function<T, U> mapper) {
+    public <U> @NotNull @NonNull JBlobValidate<U> map(@NotNull @NonNull Function<T, U> mapper) {
         if (!this.errors.isEmpty() || this.value == null) {
             return new JBlobValidate<>(null, this.errors);
         }
@@ -175,7 +177,7 @@ public final class JBlobValidate<T> {
      *     .merge(JBlobValidate.of(b).validate(...));
      * }</pre>
      */
-    public @NotNull JBlobValidate<T> merge(@NotNull JBlobValidate<?> other) {
+    public @NotNull @NonNull JBlobValidate<T> merge(@NotNull @NonNull JBlobValidate<?> other) {
         if (other.errors.isEmpty()) return this;
         List<String> merged = new ArrayList<>(this.errors);
         merged.addAll(other.errors);
@@ -184,6 +186,7 @@ public final class JBlobValidate<T> {
 
     /**
      * Checks if the validator is valid.
+     *
      * @return If the list of errors is empty.
      */
     public boolean isValid() {
@@ -196,7 +199,7 @@ public final class JBlobValidate<T> {
      * @return The value.
      * @throws IllegalStateException If there are validation errors.
      */
-    public @NotNull T getValue() {
+    public @NotNull @NonNull T getValue() {
         if (!isValid() || this.value == null) {
             throw new IllegalStateException(
                     "Validation failed with errors: " + this.errors
@@ -210,7 +213,7 @@ public final class JBlobValidate<T> {
      *
      * @return An unmodifiable list of errors.
      */
-    public @NotNull @Unmodifiable List<String> getErrors() {
+    public @NotNull @NonNull @Unmodifiable List<String> getErrors() {
         return this.errors;
     }
 
@@ -219,14 +222,14 @@ public final class JBlobValidate<T> {
      *
      * @return The result.
      */
-    public @NotNull JBlobResult<T> toResult() {
+    public @NotNull @NonNull JBlobResult<T> toResult() {
         if (isValid()) {
             return JBlobResult.success(getValue());
         }
         return JBlobResult.failure(String.join("; ", this.errors), null);
     }
 
-    private @NotNull JBlobValidate<T> withError(@NotNull String message) {
+    private @NotNull @NonNull JBlobValidate<T> withError(@NotNull @NonNull String message) {
         List<String> next = new ArrayList<>(this.errors);
         next.add(message);
         return new JBlobValidate<>(this.value, next);

@@ -1,5 +1,8 @@
 package dev.amraleth.jblob.exception;
 
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents an Exception when performing an assert.
  *
@@ -12,7 +15,7 @@ public final class JBlobAssertException extends RuntimeException {
      *
      * @param message The message of the exception.
      */
-    public JBlobAssertException(String message) {
+    public JBlobAssertException(@NotNull @NonNull String message) {
         super(message);
     }
 }
