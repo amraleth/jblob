@@ -1,18 +1,19 @@
 package dev.amraleth.jblob.data;
 
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
-import dev.amraleth.jblob.data.types.JBlobResult;
-import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Unmodifiable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
+
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 
 /**
  * Validator that allows for multiple validations to be applied onto a single value. Furthermore, it allows for chaining
@@ -130,7 +131,7 @@ public final class JBlobValidate<T> {
      * }</pre>
      */
     public <F> @NotNull JBlobValidate<T> field(@NonNull String fieldName, @NonNull Function<T, F> extractor,
-                                               @NonNull Function<JBlobValidate<F>, JBlobValidate<F>> rules
+        @NonNull Function<JBlobValidate<F>, JBlobValidate<F>> rules
     ) {
         if (this.value == null) return this;
         JBlobValidate<F> fieldValidation = rules.apply(JBlobValidate.of(extractor.apply(value)));
@@ -195,7 +196,7 @@ public final class JBlobValidate<T> {
     public @NotNull T getValue() {
         if (!isValid() || this.value == null) {
             throw new IllegalStateException(
-                    "Validation failed with errors: " + this.errors
+                "Validation failed with errors: " + this.errors
             );
         }
         return this.value;

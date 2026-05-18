@@ -1,9 +1,10 @@
 package dev.amraleth.jblob.data.types.holder;
 
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 
 /**
  * Represents a pair of data.

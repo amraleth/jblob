@@ -1,13 +1,13 @@
 package dev.amraleth.jblob.reflection;
 
-import dev.amraleth.jblob.annotation.JBlobStaticClass;
-import lombok.NonNull;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
+import dev.amraleth.jblob.annotation.JBlobStaticClass;
+import lombok.NonNull;
 
 /**
  * Process utils for extracting annotations from methods and fields.
@@ -34,8 +34,8 @@ public final class AnnotationProcessor {
      * @param <A>            The type of the annotation.
      */
     public static <A extends Annotation> void processMethodAnnotations(@NonNull Class<?> clazz,
-                                                                       @NonNull Class<A> annotationType,
-                                                                       @NonNull Consumer<A> consumer) {
+        @NonNull Class<A> annotationType,
+        @NonNull Consumer<A> consumer) {
         for (Method method : clazz.getDeclaredMethods()) {
             if (method.isAnnotationPresent(annotationType)) {
                 A annotation = method.getAnnotation(annotationType);
@@ -53,8 +53,8 @@ public final class AnnotationProcessor {
      * @param <A>            The type of the annotation.
      */
     public static <A extends Annotation> void processMethodAnnotations(@NonNull Class<?> clazz,
-                                                                       @NonNull Class<A> annotationType,
-                                                                       @NonNull BiConsumer<A, Method> consumer) {
+        @NonNull Class<A> annotationType,
+        @NonNull BiConsumer<A, Method> consumer) {
         for (Method method : clazz.getDeclaredMethods()) {
             if (method.isAnnotationPresent(annotationType)) {
                 A annotation = method.getAnnotation(annotationType);
@@ -72,8 +72,8 @@ public final class AnnotationProcessor {
      * @param <A>            THe type of the annotation.
      */
     public static <A extends Annotation> void processFieldAnnotations(@NonNull Class<?> clazz,
-                                                                      @NonNull Class<A> annotationType,
-                                                                      @NonNull Consumer<A> consumer) {
+        @NonNull Class<A> annotationType,
+        @NonNull Consumer<A> consumer) {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(annotationType)) {
                 A annotation = field.getAnnotation(annotationType);
@@ -91,8 +91,8 @@ public final class AnnotationProcessor {
      * @param <A>            The type of the annotation.
      */
     public static <A extends Annotation> void processFieldAnnotations(@NonNull Class<?> clazz,
-                                                                      @NonNull Class<A> annotationType,
-                                                                      @NonNull BiConsumer<A, Field> consumer) {
+        @NonNull Class<A> annotationType,
+        @NonNull BiConsumer<A, Field> consumer) {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(annotationType)) {
                 A annotation = field.getAnnotation(annotationType);

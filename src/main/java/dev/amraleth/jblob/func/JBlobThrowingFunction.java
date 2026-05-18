@@ -1,10 +1,11 @@
 package dev.amraleth.jblob.func;
 
-import dev.amraleth.jblob.data.types.JBlobResult;
-import lombok.NonNull;
+import java.util.function.Function;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Function;
+import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 
 /**
  * Functional interface for allowing checked exceptions inside a function block.

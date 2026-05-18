@@ -1,14 +1,15 @@
 package dev.amraleth.jblob.data.types;
 
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
-import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.NonNull;
 
 /**
  * Represents a value that is initialized later and thread-safe. It is used like

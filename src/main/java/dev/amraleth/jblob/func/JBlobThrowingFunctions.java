@@ -1,14 +1,14 @@
 package dev.amraleth.jblob.func;
 
-import dev.amraleth.jblob.annotation.JBlobStaticClass;
-import dev.amraleth.jblob.data.types.JBlobResult;
-
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
+
+import dev.amraleth.jblob.annotation.JBlobStaticClass;
+import dev.amraleth.jblob.data.types.JBlobResult;
 
 /**
  * Contains common abstractions for {@link JBlobThrowingFunction}.

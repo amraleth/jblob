@@ -1,12 +1,13 @@
 package dev.amraleth.jblob.data.types;
 
+import java.util.Optional;
+
+import org.jetbrains.annotations.NotNull;
+
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import lombok.Getter;
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 /**
  * Represents a range of data that can be inclusive or exclusive of the endings.
@@ -127,7 +128,7 @@ public final class JBlobRange<T extends Comparable<T>> {
      */
     public boolean overlaps(@NonNull JBlobRange<T> other) {
         return this.contains(other.start) || this.contains(other.end)
-                || other.contains(this.start) || other.contains(this.end);
+        || other.contains(this.start) || other.contains(this.end);
     }
 
     /**
@@ -161,11 +162,11 @@ public final class JBlobRange<T extends Comparable<T>> {
         T newStart = this.start.compareTo(other.start) >= 0 ? this.start : other.start;
         T newEnd = this.end.compareTo(other.end) <= 0 ? this.end : other.end;
         boolean newStartInclusive = this.start.compareTo(other.start) == 0
-                ? this.startInclusive && other.startInclusive
-                : (this.start.compareTo(other.start) >= 0 ? this.startInclusive : other.startInclusive);
+        ? this.startInclusive && other.startInclusive
+        : (this.start.compareTo(other.start) >= 0 ? this.startInclusive : other.startInclusive);
         boolean newEndInclusive = this.end.compareTo(other.end) == 0
-                ? this.endInclusive && other.endInclusive
-                : (this.end.compareTo(other.end) <= 0 ? this.endInclusive : other.endInclusive);
+        ? this.endInclusive && other.endInclusive
+        : (this.end.compareTo(other.end) <= 0 ? this.endInclusive : other.endInclusive);
 
         return Optional.of(new JBlobRange<>(newStart, newEnd, newStartInclusive, newEndInclusive));
     }
@@ -180,11 +181,11 @@ public final class JBlobRange<T extends Comparable<T>> {
         T newStart = this.start.compareTo(other.start) <= 0 ? this.start : other.start;
         T newEnd = this.end.compareTo(other.end) >= 0 ? this.end : other.end;
         boolean newStartInclusive = this.start.compareTo(other.start) == 0
-                ? this.startInclusive || other.startInclusive
-                : (this.start.compareTo(other.start) <= 0 ? this.startInclusive : other.startInclusive);
+        ? this.startInclusive || other.startInclusive
+        : (this.start.compareTo(other.start) <= 0 ? this.startInclusive : other.startInclusive);
         boolean newEndInclusive = this.end.compareTo(other.end) == 0
-                ? this.endInclusive || other.endInclusive
-                : (this.end.compareTo(other.end) >= 0 ? this.endInclusive : other.endInclusive);
+        ? this.endInclusive || other.endInclusive
+        : (this.end.compareTo(other.end) >= 0 ? this.endInclusive : other.endInclusive);
 
         return new JBlobRange<>(newStart, newEnd, newStartInclusive, newEndInclusive);
     }

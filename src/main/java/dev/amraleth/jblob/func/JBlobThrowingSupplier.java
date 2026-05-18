@@ -1,12 +1,13 @@
 package dev.amraleth.jblob.func;
 
-import dev.amraleth.jblob.data.types.JBlobLazyValue;
-import dev.amraleth.jblob.data.types.JBlobResult;
-import lombok.NonNull;
+import java.util.function.Supplier;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Supplier;
+import dev.amraleth.jblob.data.types.JBlobLazyValue;
+import dev.amraleth.jblob.data.types.JBlobResult;
+import lombok.NonNull;
 
 /**
  * Represents a supplier that allows for checked exceptions.

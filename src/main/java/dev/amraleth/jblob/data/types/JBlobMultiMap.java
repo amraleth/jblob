@@ -1,13 +1,20 @@
 package dev.amraleth.jblob.data.types;
 
-import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import lombok.NonNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.*;
-import java.util.function.BiConsumer;
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
+import lombok.NonNull;
 
 /**
  * A map that associates each key with multiple values.

@@ -1,20 +1,21 @@
 package dev.amraleth.jblob.data;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
+
 import dev.amraleth.jblob.annotation.JBlobExperimental;
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
 import dev.amraleth.jblob.data.types.holder.JBlobPair;
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Unmodifiable;
-
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * A thread-safe, fixed-capacity cache that evicts the least-recently-used entry

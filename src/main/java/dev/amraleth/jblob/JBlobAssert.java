@@ -1,13 +1,14 @@
 package dev.amraleth.jblob;
 
-import dev.amraleth.jblob.annotation.JBlobStaticClass;
-import dev.amraleth.jblob.exception.JBlobAssertException;
-import lombok.NonNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+
+import org.jetbrains.annotations.Nullable;
+
+import dev.amraleth.jblob.annotation.JBlobStaticClass;
+import dev.amraleth.jblob.exception.JBlobAssertException;
+import lombok.NonNull;
 
 /**
  * Contains chainable assertions for easier assertions
@@ -37,7 +38,7 @@ public final class JBlobAssert {
      * @throws IllegalArgumentException If the predicate fails.
      */
     public static <T> @Nullable T assertion(@Nullable T value, @NonNull Predicate<T> predicate,
-                                            @NonNull String format, @NonNull Object... formats) {
+        @NonNull String format, @NonNull Object... formats) {
         if (!predicate.test(value)) {
             throw new JBlobAssertException(String.format(format, formats));
         }
@@ -112,8 +113,7 @@ public final class JBlobAssert {
      * @return The first value.
      */
     public static <T, K> @Nullable T biAssertion(@Nullable T first, @Nullable K second,
-                                                 @NonNull BiPredicate<T, K> predicate,
-                                                 @NonNull String format, @NonNull Object... formats) {
+        @NonNull BiPredicate<T, K> predicate, @NonNull String format, @NonNull Object... formats) {
         if (!predicate.test(first, second)) {
             throw new JBlobAssertException(String.format(format, formats));
         }

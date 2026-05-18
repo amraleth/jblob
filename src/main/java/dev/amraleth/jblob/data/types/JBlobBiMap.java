@@ -1,13 +1,15 @@
 package dev.amraleth.jblob.data.types;
 
-import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import dev.amraleth.jblob.data.types.holder.JBlobPair;
-import lombok.NonNull;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.*;
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobMutable;
+import dev.amraleth.jblob.data.types.holder.JBlobPair;
+import lombok.NonNull;
 
 /**
  * A bidirectional map that maintains a one-to-one relationship between keys and values.

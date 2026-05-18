@@ -1,12 +1,13 @@
 package dev.amraleth.jblob.data.types.holder;
 
+import java.util.Arrays;
+
+import org.jetbrains.annotations.NotNull;
+
 import dev.amraleth.jblob.annotation.JBlobThreadSafe;
 import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
 import dev.amraleth.jblob.data.types.JBlobResult;
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 /**
  * Represents a tuple of an arbitrary size, backed by a fixed-length array.

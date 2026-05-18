@@ -1,11 +1,5 @@
 package dev.amraleth.jblob.data.types;
 
-import dev.amraleth.jblob.annotation.JBlobThreadSafe;
-import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
-import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
@@ -13,6 +7,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import dev.amraleth.jblob.annotation.JBlobThreadSafe;
+import dev.amraleth.jblob.annotation.mutability.JBlobImmutable;
+import lombok.NonNull;
 
 /**
  * A timezone-agnostic database-independent timestamp backed by a java {@link Instant}.
